@@ -159,10 +159,45 @@
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-weight: 300; /* Light */
     }
+    .rounded-full {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transform-style: preserve-3d;
+    }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const logo = document.querySelector('.rounded-full'); // Select the round IEEE logo
+        const container = document.querySelector('.custom-gradient'); // Parent container for mouse tracking
+        
+        if (logo && container) {
+            // Add some styling to prepare for 3D effect
+            logo.style.transition = 'transform 0.1s ease-out';
+            logo.style.transformStyle = 'preserve-3d';
+            
+            // Track mouse movement within the container
+            container.addEventListener('mousemove', function(e) {
+                // Get container dimensions and position
+                const rect = container.getBoundingClientRect();
+                
+                // Calculate mouse position relative to the center of the logo
+                const logoRect = logo.getBoundingClientRect();
+                const logoX = logoRect.left + (logoRect.width / 2);
+                const logoY = logoRect.top + (logoRect.height / 2);
+                
+                // Calculate the angle of rotation based on mouse distance from center
+                const angleY = (e.clientX - logoX) * 0.02; // Adjust multiplier for sensitivity
+                const angleX = (logoY - e.clientY) * 0.02; // Inverted for natural tilt
+                
+                // Apply the 3D transformation
+                logo.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+            });
+            
+            // Reset position when mouse leaves the container
+            container.addEventListener('mouseleave', function() {
+                logo.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        }
         // Animation Observer
         const observerOptions = {
             root: null,
@@ -283,6 +318,37 @@
             }
         });
     });
+    const logo = document.querySelector('.rounded-full'); // Select the round IEEE logo
+    const container = document.querySelector('.custom-gradient'); // Parent container for mouse tracking
+    
+    if (logo && container) {
+        // Add some styling to prepare for 3D effect
+        logo.style.transition = 'transform 0.1s ease-out';
+        logo.style.transformStyle = 'preserve-3d';
+        
+        // Track mouse movement within the container
+        container.addEventListener('mousemove', function(e) {
+            // Get container dimensions and position
+            const rect = container.getBoundingClientRect();
+            
+            // Calculate mouse position relative to the center of the logo
+            const logoRect = logo.getBoundingClientRect();
+            const logoX = logoRect.left + (logoRect.width / 2);
+            const logoY = logoRect.top + (logoRect.height / 2);
+            
+            // Calculate the angle of rotation based on mouse distance from center
+            const angleY = (e.clientX - logoX) * 0.02; // Adjust multiplier for sensitivity
+            const angleX = (logoY - e.clientY) * 0.02; // Inverted for natural tilt
+            
+            // Apply the 3D transformation
+            logo.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+        });
+        
+        // Reset position when mouse leaves the container
+        container.addEventListener('mouseleave', function() {
+            logo.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    }
 </script>
 
 <!-- Hero Section -->
