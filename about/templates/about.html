@@ -1,17 +1,452 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}About - IEEE SBUI{% endblock %}
+{% block title %}About IEEE SBUI{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-16">
-    <h1 class="text-4xl font-bold text-center mb-8">About IEEE SBUI</h1>
-    <div class="max-w-4xl mx-auto">
-        <p class="text-lg text-gray-700 mb-6">
-            This is about page for IEEE SBUI. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Quisquam voluptates, quod, quae, voluptate quibusdam voluptatibus quidem voluptatem quos 
-            quia quas nesciunt. Quisquam, quae. Quisquam voluptates, quod, quae, voluptate quibusdam.
-        </p>
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .delay-100 {
+        animation-delay: 100ms;
+    }
+    .delay-200 {
+        animation-delay: 200ms;
+    }
+    .delay-300 {
+        animation-delay: 300ms;
+    }
+    .delay-400 {
+        animation-delay: 400ms;
+    }
+    .custom-gradient {
+        background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        color: white;
+        padding-top: 4rem;  
+        padding-bottom: 4rem;
+    }
+    .footer-gradient {
+        background: linear-gradient(79deg, #F7BF4E 0%, #F32929 51%, #090EA7 100%);
+        color: white;
+        padding-top: 2rem;  
+        padding-bottom: 2rem;
+    }
+    .custom-text-gradient {
+        background-image: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        /* Tetapkan ukuran gradient dengan nilai fixed */
+        display: inline-block;
+        background-size: 100% 100%;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    /* Updated Carousel styling to match the first image */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .carousel-track {
+        display: flex;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .carousel-slide {
+        min-width: 100%;
+        box-sizing: border-box;
+        padding: 0 0.5rem;
+    }
+
+    .carousel-nav {
+        width: 24px;
+        height: 24px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        color: #333;
+    }
+
+    .carousel-nav:hover {
+        opacity: 0.7;
+    }
+
+    .pagination-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin: 0 2px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination-dot.active {
+        background-color: #e63946; /* Red active dot as shown in image */
+    }
+
+    /* Desktop view - hide carousel, show grid */
+    @media (min-width: 768px) {
+        .carousel-container.core-values {
+            overflow: visible;
+        }
+        
+        .carousel-track.core-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            transform: none !important;
+        }
+        
+        .carousel-slide.core-values {
+            min-width: 0;
+            padding: 0;
+        }
+        
+        .carousel-nav, .pagination-dots.core-values {
+            display: none;
+        }
+    }
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueHeavy_0.otf" %}') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueLight_0.otf" %}') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    h1, h2, h3, h4, h5, h6, .custom-text-gradient {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 700; /* This ensures the Heavy version is used */
+    }
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 300; /* Light */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Core Values Carousel for Mobile
+        const coreValuesTrack = document.querySelector('.carousel-track.core-values');
+        const slides = document.querySelectorAll('.carousel-slide.core-values');
+        const dots = document.querySelectorAll('.pagination-dots.core-values .pagination-dot');
+        const prevBtn = document.querySelector('.carousel-nav.prev');
+        const nextBtn = document.querySelector('.carousel-nav.next');
+        let currentIndex = 0;
+        
+        // Only initialize carousel if we're on mobile
+        if (window.innerWidth < 768) {
+            // Set initial position
+            updateCarousel();
+            
+            // Navigation buttons
+            if (prevBtn) {
+                prevBtn.addEventListener('click', function() {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    if (currentIndex < slides.length - 1) {
+                        currentIndex++;
+                        updateCarousel();
+                    }
+                });
+            }
+            
+            // Add touch event listeners
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            coreValuesTrack.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            coreValuesTrack.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold && currentIndex < slides.length - 1) {
+                    // Swipe left
+                    currentIndex++;
+                    updateCarousel();
+                } else if (touchEndX > touchStartX + swipeThreshold && currentIndex > 0) {
+                    // Swipe right
+                    currentIndex--;
+                    updateCarousel();
+                }
+            }
+            
+            // Add click event to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function() {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+        }
+        
+        function updateCarousel() {
+            // Update track position
+            coreValuesTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Update button states
+            if (prevBtn) {
+                prevBtn.style.opacity = currentIndex === 0 ? "0.5" : "1";
+                prevBtn.style.pointerEvents = currentIndex === 0 ? "none" : "auto";
+            }
+            
+            if (nextBtn) {
+                nextBtn.style.opacity = currentIndex === slides.length - 1 ? "0.5" : "1";
+                nextBtn.style.pointerEvents = currentIndex === slides.length - 1 ? "none" : "auto";
+            }
+        }
+        
+        // Handle window resize - reinitialize if needed
+        window.addEventListener('resize', function() {
+            if (window.innerWidth < 768) {
+                updateCarousel();
+            }
+        });
+    });
+</script>
+
+<!-- Hero Section -->
+<section class="custom-gradient">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="flex-1 animate-on-scroll">
+                <h1 class="text-5xl font-bold mb-4">About IEEE SBUI</h1>
+                <p class="text-lg mb-8">Learn about our history, mission, and the team behind IEEE Student Branch Universitas  Indonesia</p>
+            </div>
+            <div class="flex-1 animate-on-scroll delay-200">
+                <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="IEEE SBUI Logo" class="rounded-full w-full max-w-md mx-auto">
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- Who We Are Section -->
+<section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="animate-on-scroll order-2 md:order-1">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 custom-text-gradient">Who We Are</h2>
+                <p class="text-gray-700 mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p class="text-gray-700">
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+            <div class="flex justify-center animate-on-scroll delay-200 order-1 md:order-2">
+                <img src="{% static 'images/team-photo.jpg' %}" alt="Team Member" class="rounded-lg shadow-lg max-w-full h-auto max-h-96 object-cover">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision Section -->
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div style="width: 100%; text-align: center;">
+            <h2 class="text-3xl font-bold mb-8 text-center animate-on-scroll custom-text-gradient">Our Mission & Vision</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Mission Card -->
+            <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 animate-on-scroll delay-100">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" 
+                         style="background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);">
+                        <img src="{% static 'images/mission-logo.png' %}" alt="Mission Icon" class="w-8 h-8">
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Our Mission</h3>
+                    <p class="text-gray-700 text-sm md:text-base">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut 
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Vision Card -->
+            <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 animate-on-scroll delay-200">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" 
+                         style="background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);">
+                        <img src="{% static 'images/vision-logo.png' %}" alt="Vision Icon" class="w-8 h-8">
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Our Vision</h3>
+                    <p class="text-gray-700 text-sm md:text-base">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut 
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Core Values Section -->
+<section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+        <div style="width: 100%; text-align: center;">
+            <h2 class="text-3xl font-bold mb-8 text-center animate-on-scroll custom-text-gradient">Our Core Values</h2>
+        </div> 
+        
+        <div class="mx-auto"> <!-- Container to center and limit width -->
+            <!-- Carousel for Core Values (mobile) / Grid (desktop) -->
+            <div class="carousel-container core-values">
+                <div class="carousel-track core-values">
+                    <!-- Value 1 -->
+                    <div class="carousel-slide core-values">
+                        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100 h-full">
+                            <h3 class="text-xl font-semibold mb-4">Innovation</h3>
+                            <p class="text-gray-700 text-sm md:text-base">Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Value 2 -->
+                    <div class="carousel-slide core-values">
+                        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100 h-full">
+                            <h3 class="text-xl font-semibold mb-4">Excellence</h3>
+                            <p class="text-gray-700 text-sm md:text-base">Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Value 3 -->
+                    <div class="carousel-slide core-values">
+                        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100 h-full">
+                            <h3 class="text-xl font-semibold mb-4">Integrity</h3>
+                            <p class="text-gray-700 text-sm md:text-base">Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation and Pagination container -->
+                <div class="flex justify-center items-center mt-6 space-x-4">
+                    <!-- Left navigation arrow -->
+                    <button class="carousel-nav prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Pagination dots -->
+                    <div class="pagination-dots core-values flex space-x-2">
+                        <div class="pagination-dot w-2 h-2"></div>
+                        <div class="pagination-dot w-2 h-2"></div>
+                        <div class="pagination-dot w-2 h-2"></div>
+                    </div>
+                    
+                    <!-- Right navigation arrow -->
+                    <button class="carousel-nav next">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Team Section -->
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div style="width: 100%; text-align: center;">
+            <h2 class="text-3xl font-bold mb-8 text-center animate-on-scroll custom-text-gradient">Meet The Leaders</h2>
+        </div>        
+        <!-- Team carousel for mobile -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Team Member 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100">
+                <div class="p-1">
+                    <img src="{% static 'images/placeholder-person.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="text-lg font-bold mb-1">Jane Doe</h3>
+                    <p class="text-gray-600 text-sm">President</p>
+                </div>
+            </div>
+            
+            <!-- Additional team members would be here -->
+        </div>
+    </div>
+</section>
 {% endblock %}
