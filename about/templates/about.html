@@ -137,6 +137,28 @@
             display: none;
         }
     }
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueHeavy_0.otf" %}') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueLight_0.otf" %}') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    h1, h2, h3, h4, h5, h6, .custom-text-gradient {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 700; /* This ensures the Heavy version is used */
+    }
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 300; /* Light */
+    }
 </style>
 
 <script>
@@ -165,7 +187,7 @@
         // Core Values Carousel for Mobile
         const coreValuesTrack = document.querySelector('.carousel-track.core-values');
         const slides = document.querySelectorAll('.carousel-slide.core-values');
-        const dots = document.querySelectorAll('.pagination-dot');
+        const dots = document.querySelectorAll('.pagination-dots.core-values .pagination-dot');
         const prevBtn = document.querySelector('.carousel-nav.prev');
         const nextBtn = document.querySelector('.carousel-nav.next');
         let currentIndex = 0;
