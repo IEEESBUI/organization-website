@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - IEEE SBUI{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .delay-100 {
+        animation-delay: 100ms;
+    }
+    .delay-200 {
+        animation-delay: 200ms;
+    }
+    .delay-300 {
+        animation-delay: 300ms;
+    }
+    .delay-400 {
+        animation-delay: 400ms;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                    observer.unobserve(entry.target); // Stop observing once animation is triggered
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+    });
+</script>
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-red-600 via-orange-500 to-purple-700 text-white py-24">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="flex-1 animate-on-scroll">
+                <h1 class="text-5xl font-bold mb-4">IEEE Student Branch<br/>Universitas Indonesia</h1>
+                <p class="text-lg mb-8">Empowering students through technology and innovation since 2025</p>
+                <div class="flex gap-4">
+                    <a href="#" class="px-8 py-3 bg-white text-red-600 rounded-lg font-semibold hover:bg-opacity-90 transition">Learn More</a>
+                    <a href="#" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:bg-opacity-10 transition">Join Us</a>
+                </div>
+            </div>
+            <div class="flex-1 animate-on-scroll delay-200">
+                <img src="{% static 'images/ieee-sbui-logo.png' %}" alt="IEEE SBUI Logo" class="rounded-full w-full max-w-md mx-auto">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About IEEE SBUI Section -->
+<section class="py-24 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16 animate-on-scroll">
+            <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-transparent bg-clip-text">About IEEE SBUI</h2>
+            <p class="text-gray-600 text-lg">Discover the mission and vision of IEEE Student Branch Universitas Indonesia</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Who We Are Card -->
+            <div class="bg-white rounded-lg p-8 text-center shadow-lg border border-gray-100 transition-all duration-300 hover:scale-105 animate-on-scroll delay-100">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#FF4D00] to-purple-600 flex items-center justify-center">
+                    <i class="fas fa-users text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Who We Are</h3>
+                <p class="text-gray-600">A community of engineering students passionate about technology and innovation</p>
+            </div>
+
+            <!-- Our Mission Card -->
+            <div class="bg-white rounded-lg p-8 text-center shadow-lg border border-gray-100 transition-all duration-300 hover:scale-105 animate-on-scroll delay-200">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#FF4D00] to-purple-600 flex items-center justify-center">
+                    <i class="fas fa-book text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Our Mission</h3>
+                <p class="text-gray-600">To foster technological innovation and excellence for the benefit of humanity</p>
+            </div>
+
+            <!-- What We Do Card -->
+            <div class="bg-white rounded-lg p-8 text-center shadow-lg border border-gray-100 transition-all duration-300 hover:scale-105 animate-on-scroll delay-300">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#FF4D00] to-purple-600 flex items-center justify-center">
+                    <i class="fas fa-calendar text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">What We Do</h3>
+                <p class="text-gray-600">Organize workshops, competitions, and networking events for engineering students</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="/about" class="inline-flex items-center text-[#FF4D00] font-semibold hover:text-red-700 transition-colors">
+                Learn More About Us
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Our Divisions Section -->
+<section class="py-24 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16 animate-on-scroll">
+            <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-transparent bg-clip-text">Our Divisions</h2>
+            <p class="text-gray-600 text-lg">Explore the different divisions within IEEE SBUI and their specialized focus areas</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Computer Society -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-100">
+                <div class="h-2 bg-[#FF4D00]"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">Computer Society</h3>
+                    <p class="text-gray-600 mb-4">Advancing the theory and practice of computer engineering and technology</p>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Learn more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Power & Energy -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-200">
+                <div class="h-2 bg-[#FFB800]"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">Power & Energy</h3>
+                    <p class="text-gray-600 mb-4">Focused on the generation, transmission, and utilization of electric power</p>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Learn more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Robotics & Automation -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-300">
+                <div class="h-2 bg-[#0000FF]"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">Robotics & Automation</h3>
+                    <p class="text-gray-600 mb-4">Advancing the theory and practice of robotics and automation engineering</p>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Learn more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Women in Engineering -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-400">
+                <div class="h-2 bg-purple-600"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">Women in Engineering</h3>
+                    <p class="text-gray-600 mb-4">Promoting women engineers and scientists, and inspiring girls to pursue STEM careers</p>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Learn more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="/divisions" class="inline-flex items-center text-gray-900 font-semibold hover:text-[#FF4D00] transition-colors">
+                View All Divisions
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Events Section -->
+<section class="py-24 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16 animate-on-scroll">
+            <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-transparent bg-clip-text">Upcoming Events</h2>
+            <p class="text-gray-600 text-lg">Join us for our upcoming workshops, seminars, and networking events</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Tech Workshop Event -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-100">
+                <div class="relative w-full" style="padding-top: 56.25%;">
+                    <img src="{% static 'images/placeholder-16_9.jpg' %}" alt="AI Workshop" class="absolute top-0 left-0 w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">Tech Workshop: AI Fundamentals</h3>
+                    <div class="flex items-center text-gray-600 mb-2">
+                        <i class="far fa-calendar mr-2"></i>
+                        <span>May 15, 2025</span>
+                    </div>
+                    <div class="text-gray-600 mb-4">Engineering Building, UI Campus</div>
+                    <a href="#" class="inline-block px-6 py-2 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                        Register Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- IEEE Day Event -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-200">
+                <div class="relative w-full" style="padding-top: 56.25%;">
+                    <img src="{% static 'images/placeholder-16_9.jpg' %}" alt="IEEE Day" class="absolute top-0 left-0 w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">IEEE Day Celebration</h3>
+                    <div class="flex items-center text-gray-600 mb-2">
+                        <i class="far fa-calendar mr-2"></i>
+                        <span>October 1, 2025</span>
+                    </div>
+                    <div class="text-gray-600 mb-4">Main Auditorium, UI Campus</div>
+                    <a href="#" class="inline-block px-6 py-2 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                        Register Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Career Fair Event -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 animate-on-scroll delay-300">
+                <div class="relative w-full" style="padding-top: 56.25%;">
+                    <img src="{% static 'images/placeholder-16_9.jpg' %}" alt="Career Fair" class="absolute top-0 left-0 w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3">Engineering Career Fair</h3>
+                    <div class="flex items-center text-gray-600 mb-2">
+                        <i class="far fa-calendar mr-2"></i>
+                        <span>November 20, 2025</span>
+                    </div>
+                    <div class="text-gray-600 mb-4">Convention Center, Jakarta</div>
+                    <a href="#" class="inline-block px-6 py-2 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                        Register Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="/event" class="inline-flex items-center text-gray-900 font-semibold hover:text-[#FF4D00] transition-colors">
+                View All Events
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Articles Section -->
+<section class="py-24 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16 animate-on-scroll">
+            <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-[#FF4D00] via-orange-500 to-purple-600 text-transparent bg-clip-text">Latest Articles</h2>
+            <p class="text-gray-600 text-lg">Stay updated with the latest news, insights, and technological advancements</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Article 1 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-6 transition-all duration-300 hover:scale-105 animate-on-scroll delay-100">
+                <div class="text-gray-500 mb-3">April 10, 2025</div>
+                <h3 class="text-xl font-bold mb-3">The Future of Renewable Energy</h3>
+                <p class="text-gray-600 mb-4">Exploring the latest innovations in renewable energy technologies and their impact on sustainability.</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500">By Dr. Sarah Johnson</span>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Read more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-6 transition-all duration-300 hover:scale-105 animate-on-scroll delay-200">
+                <div class="text-gray-500 mb-3">March 25, 2025</div>
+                <h3 class="text-xl font-bold mb-3">Advancements in Artificial Intelligence</h3>
+                <p class="text-gray-600 mb-4">A deep dive into recent breakthroughs in AI research and their potential applications in various industries.</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500">By Prof. Michael Chen</span>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Read more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-6 transition-all duration-300 hover:scale-105 animate-on-scroll delay-300">
+                <div class="text-gray-500 mb-3">February 15, 2025</div>
+                <h3 class="text-xl font-bold mb-3">IEEE SBUI Wins Regional Competition</h3>
+                <p class="text-gray-600 mb-4">Our student team secured first place in the IEEE Region 10 Student Paper Contest with their innovative solution.</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500">By IEEE SBUI Team</span>
+                    <a href="#" class="text-[#FF4D00] font-semibold inline-flex items-center hover:text-red-700 transition-colors">
+                        Read more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="/article" class="inline-flex items-center text-gray-900 font-semibold hover:text-[#FF4D00] transition-colors">
+                View All Articles
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Join Our Community Section -->
+<section class="bg-gradient-to-br from-[#FF4D00] via-orange-500 to-purple-700 text-white py-24">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center animate-on-scroll">
+            <h2 class="text-4xl font-bold mb-6">Join Our Community</h2>
+            <p class="text-lg mb-12 opacity-90">Become a part of IEEE SBUI and connect with like-minded individuals who are passionate about technology and innovation.</p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="#" class="px-8 py-3 bg-white text-[#FF4D00] rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105">
+                    Become a Member
+                </a>
+                <a href="#" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:bg-opacity-10 transition-all transform hover:scale-105">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
