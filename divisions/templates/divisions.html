@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Divisions - IEEE SBUI{% endblock %}
+
+{% block content %}
+<div class="flex flex-col min-h-screen">
+  <!-- Hero Section -->
+  <section class="ieee-gradient text-white py-16 md:py-24">
+    <div class="container">
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Our Divisions</h1>
+        <p class="text-lg md:text-xl opacity-90">
+          Explore the specialized divisions within IEEE SBUI, each focused on different aspects of electrical
+          engineering and technology
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divisions Overview -->
+  <section class="py-16 bg-white">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Divisions Overview</h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          IEEE SBUI is organized into several specialized divisions, each focusing on different aspects of
+          electrical engineering and technology
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {% for division in divisions %}
+        <div class="card">
+          <div class="card-content p-6">
+            <div class="flex flex-col md:flex-row gap-4 items-start">
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-r from-{{ division.color }}-600 to-{{ division.color }}-700 flex items-center justify-center">
+                  <i class="fa fa-{{ division.icon_class }} h-8 w-8 text-white"></i>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold mb-2" id="{{ division.id_name }}">
+                  {{ division.name }}
+                </h3>
+                <p class="text-muted-foreground mb-4">
+                  {{ division.description }}
+                </p>
+                <div class="space-y-2">
+                  <h4 class="font-semibold">Key Activities:</h4>
+                  <ul class="list-disc list-inside text-muted-foreground space-y-1">
+                    {% for activity in division.activities.all %}
+                    <li>{{ activity.description }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Division Projects -->
+  <section class="py-16 bg-gray-50">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Featured Projects</h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          Explore some of the innovative projects developed by our divisions
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {% for project in projects %}
+        <div class="card overflow-hidden">
+          {% if project.image %}
+          <img 
+            src="{{ project.image.url }}" 
+            alt="{{ project.title }}" 
+            class="w-full h-48 object-cover"
+          />
+          {% else %}
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">No image available</span>
+          </div>
+          {% endif %}
+          <div class="card-content p-6">
+            <div class="text-sm font-medium text-primary mb-1">{{ project.division.name }}</div>
+            <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
+            <p class="text-muted-foreground mb-4">{{ project.description }}</p>
+            <a href="#" class="text-primary flex items-center gap-1 text-sm font-medium hover:underline">
+              Learn more <i class="fa fa-arrow-right h-3 w-3"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Division Leaders -->
+  <section class="py-16 bg-white">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Division Leaders</h2>
+        <p class="text-muted-foreground max-w-2xl mx-auto">
+          Meet the dedicated individuals who lead our specialized divisions
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for leader in leaders %}
+        <div class="card overflow-hidden">
+          {% if leader.image %}
+          <img 
+            src="{{ leader.image.url }}" 
+            alt="{{ leader.name }}" 
+            class="w-full h-64 object-cover"
+          />
+          {% else %}
+          <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">No image available</span>
+          </div>
+          {% endif %}
+          <div class="card-content p-6 text-center">
+            <h3 class="text-xl font-bold mb-1">{{ leader.name }}</h3>
+            <p class="text-muted-foreground">{{ leader.position }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Join a Division -->
+  <section class="ieee-gradient text-white py-16">
+    <div class="container">
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Join a Division</h2>
+        <p class="text-lg opacity-90 mb-8">
+          Interested in joining one of our specialized divisions? Become a member of IEEE SBUI and indicate your
+          division preference during registration.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="#" class="btn btn-lg bg-white text-red-600 hover:bg-white/90">
+            Become a Member
+          </a>
+          <a href="#" class="btn btn-lg btn-outline border-white text-white hover:bg-white/10">
+            Contact Division Leaders
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %} 
