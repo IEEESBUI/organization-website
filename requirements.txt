@@ -6,4 +6,4 @@ requests
 urllib3
 Pillow
 dotenv
-django-ckeditor
+# django-ckeditor # kalau mau bikin editor yang lebih cakep bisa pake ini https://medium.com/@yashnarsamiyev2/how-to-add-ckeditor-in-django-aa6de5a09862
