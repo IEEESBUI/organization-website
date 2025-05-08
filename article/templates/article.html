@@ -20,6 +20,38 @@
     font-display: swap;
   }
 
+  @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.delay-100 {
+    animation-delay: 100ms;
+}
+.delay-200 {
+    animation-delay: 200ms;
+}
+.delay-300 {
+    animation-delay: 300ms;
+}
+.delay-400 {
+    animation-delay: 400ms;
+}
+
   /* Apply Helvetica Neue globally */
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -146,8 +178,8 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="bg-gradient-to-r from-blue-900 via-[#f32929] to-blue-900 py-32 text-center">
-  <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Articles</h1>
-  <p class="text-white max-w-xl mx-auto px-4">
+  <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-on-scroll delay-400">Articles</h1>
+  <p class="text-white max-w-xl mx-auto px-4 animate-on-scroll delay-400">
     Stay updated with the latest news, insights, and technological advancements
   </p>
 </section>
@@ -239,22 +271,22 @@
 
 <!-- Featured Articles -->
 <section class="py-8 px-6 max-w-6xl mx-auto w-full">
-  <div class="text-center mb-6">
-    <h2 class="text-3xl md:text-4xl font-bold mb-2">
+  <div class="text-center mb-6 ">
+    <h2 class="text-3xl md:text-4xl font-bold mb-2 animate-on-scroll delay-400">
       <span class="text-purple-800">Featured</span> <span class="text-[#f32929]">Articles</span>
     </h2>
-    <p class="text-gray-600">Highlighted articles from our contributors</p>
+    <p class="text-gray-600 animate-on-scroll delay-400">Highlighted articles from our contributors</p>
   </div>
 
   {% if featured_article %}
-  <div class="featured-article p-6 mb-12">
+  <div class="featured-article p-6 mb-12 animate-on-scroll delay-400">
     <div class="flex flex-col md:flex-row gap-6">
       <div class="md:w-1/4">
         <div class="relative w-full aspect-square rounded-lg overflow-hidden">
           {% if featured_article.image %}
           <img src="{{ featured_article.image.url }}" alt="{{ featured_article.title }}" class="object-cover w-full h-full">
           {% else %}
-          <img src="{% static 'images/placeholder.jpg' %}" alt="Placeholder" class="object-cover w-full h-full">
+          <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full">
           {% endif %}
         </div>
       </div>
@@ -281,7 +313,7 @@
 
 <!-- Latest Articles -->
 <section class="py-8 px-6 max-w-6xl mx-auto w-full">
-  <div class="flex justify-between items-center mb-6">
+  <div class="flex justify-between items-center mb-6 animate-on-scroll delay-400" >
     <div>
       <h2 class="text-3xl md:text-4xl font-bold mb-2">
         <span class="text-purple-800">Latest</span> <span class="text-[#f32929]">Articles</span>
@@ -295,13 +327,13 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="articlesContainer">
     {% for article in articles %}
-    <div class="article-card border rounded-lg overflow-hidden" 
+    <div class="article-card border rounded-lg overflow-hidden animate-on-scroll delay-400" 
          data-categories="{% for category in article.categories.all %}{{ category.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
       <div class="relative w-full aspect-video">
         {% if article.image %}
         <img src="{{ article.image.url }}" alt="{{ article.title }}" class="object-cover w-full h-full">
         {% else %}
-        <img src="{% static 'images/placeholder.jpg' %}" alt="Placeholder" class="object-cover w-full h-full">
+        <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full">
         {% endif %}
       </div>
       <div class="p-4">
@@ -331,7 +363,7 @@
       </div>
     </div>
     {% empty %}
-    <div class="col-span-3 text-center py-8">
+    <div class="col-span-3 text-center py-8 animate-on-scroll delay-400">
       <p class="text-gray-600">No articles found matching your criteria.</p>
     </div>
     {% endfor %}
@@ -366,6 +398,28 @@
 
 {% block extra_js %}
 <script>
+          // Animation Observer
+          const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+
+
   document.addEventListener('DOMContentLoaded', function() {
     // Dropdown functionality
     const filterButton = document.getElementById('filterButton');

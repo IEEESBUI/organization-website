@@ -28,7 +28,7 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
-    image = models.ImageField(upload_to='articles/', blank=True, null=True)
+    image = models.ImageField(upload_to='article/articles_images/', blank=True, null=True)
     excerpt = models.TextField(help_text="A short description of the article")
     content = models.TextField()  # Changed from RichTextUploadingField to TextField
     categories = models.ManyToManyField(Category, related_name='articles')

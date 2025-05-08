@@ -65,6 +65,8 @@ class ArticleListView(ListView):
         
         return context
 
+
+# TODO: bukan kerjaan aldo, bisa lanjutin sendiri sisanya
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_detail.html'
