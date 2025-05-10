@@ -4,12 +4,46 @@ from .models import Article, Category
 from django.template.defaulttags import register
 
 class ArticleListView(ListView):
+    """
+    view untuk menampilkan daftar artikel
+    Args:
+        ListView: Kelas dasar untuk menampilkan daftar objek
+    Attributes:
+        model (Article): Model artikel yang digunakan
+        template_name (str): Nama template untuk menampilkan daftar artikel
+        context_object_name (str): Nama konteks untuk daftar artikel
+        paginate_by (int): Jumlah artikel per halaman
+    Methods:
+        get_queryset(): Mengambil daftar artikel berdasarkan filter dan sorting
+        get_context_data(): Menambahkan kategori dan artikel unggulan ke konteks
+    Notes:
+        - Artikel yang ditampilkan adalah artikel dengan status 'published'.
+        - Artikel diurutkan berdasarkan tanggal pembuatan terbaru.
+        - Halaman artikel menggunakan pagination.
+        - Artikel dapat difilter berdasarkan kategori dan pencarian.
+        - Artikel dapat diurutkan berdasarkan tanggal terbaru, tanggal terlama, popularitas, atau abjad (A-Z atau Z-A).
+        - Kategori yang ditampilkan diambil dari model Category.
+        - Artikel unggulan diambil dari model Article dengan atribut is_featured=True.
+    """
     model = Article
     template_name = 'article.html'
     context_object_name = 'articles'
-    paginate_by = 9  # Show 9 articles per page
+    paginate_by = 3  # Show 3 articles per page
     
     def get_queryset(self):
+        """
+        Mengambil daftar artikel berdasarkan filter dan sorting
+        Args:
+            self: instance dari kelas ini
+        Returns:
+            queryset: Daftar artikel yang sudah difilter dan diurutkan
+        Notes:
+            - Artikel yang ditampilkan adalah artikel dengan status 'published'.
+            - Artikel diurutkan berdasarkan tanggal pembuatan terbaru.
+            - Filter dan sorting diterapkan berdasarkan parameter GET dari request.
+            - Artikel dapat difilter berdasarkan kategori dan pencarian.
+            - Artikel dapat diurutkan berdasarkan tanggal terbaru, tanggal terlama, popularitas, atau abjad (A-Z atau Z-A).
+        """
         queryset = Article.objects.filter(status='published').order_by('-created_at')
         
         # Apply search filter
@@ -43,6 +77,21 @@ class ArticleListView(ListView):
         return queryset
     
     def get_context_data(self, **kwargs):
+        """
+        get_context_data untuk menambahkan kategori dan artikel unggulan ke konteks
+        Args:
+            **kwargs: argumen tambahan
+        Returns:
+            context: konteks yang sudah ditambahkan kategori dan artikel unggulan
+        Notes:
+            - Kategori yang ditampilkan diambil dari model Category.
+            - Artikel unggulan diambil dari model Article dengan atribut is_featured=True.
+            - Kategori yang dipilih ditandai dalam UI.
+            - Artikel terkait ditampilkan berdasarkan kategori yang sama.
+            - Kategori yang dipilih ditampilkan dalam konteks untuk menandai kategori yang sedang aktif.
+            - Artikel terkait ditampilkan berdasarkan kategori yang sama.
+            - Artikel unggulan ditampilkan di bagian atas daftar artikel.
+        """
         context = super().get_context_data(**kwargs)
         
         # Add categories to context
@@ -66,7 +115,7 @@ class ArticleListView(ListView):
         return context
 
 
-# TODO: bukan kerjaan aldo, bisa lanjutin sendiri sisanya
+# TODO: bukan kerjaan aldo, bisa lanjutin sendiri sisanya hehe
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_detail.html'
@@ -95,7 +144,11 @@ class ArticleDetailView(DetailView):
 @register.simple_tag
 def url_replace(request, field, value):
     """
-    Template tag to replace or add a GET parameter in the current URL
+    Custom template filter to replace URL parameters
+    Args:
+        request: HTTP request object
+        field (str): Parameter name to replace
+        value (str): New value for the parameter
     """
     dict_ = request.GET.copy()
     dict_[field] = value

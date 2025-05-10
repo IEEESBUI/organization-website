@@ -177,6 +177,8 @@
 
 {% block content %}
 <!-- Hero Section -->
+
+{% comment %} TODO: BIKIN BACKGROUND NYA BENTUK DIAMOND {% endcomment %}
 <section class="bg-gradient-to-r from-blue-900 via-[#f32929] to-blue-900 py-32 text-center">
   <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-on-scroll delay-400">Articles</h1>
   <p class="text-white max-w-xl mx-auto px-4 animate-on-scroll delay-400">
@@ -270,7 +272,7 @@
 </section>
 
 <!-- Featured Articles -->
-<section class="py-8 px-6 max-w-6xl mx-auto w-full">
+<section class="py-8 px-6 max-w-6xl mx-auto w-full" >
   <div class="text-center mb-6 ">
     <h2 class="text-3xl md:text-4xl font-bold mb-2 animate-on-scroll delay-400">
       <span class="text-purple-800">Featured</span> <span class="text-[#f32929]">Articles</span>
@@ -316,7 +318,7 @@
   <div class="flex justify-between items-center mb-6 animate-on-scroll delay-400" >
     <div>
       <h2 class="text-3xl md:text-4xl font-bold mb-2">
-        <span class="text-purple-800">Latest</span> <span class="text-[#f32929]">Articles</span>
+        <span class="text-purple-800">Latest</span> <span class="text-[#f32929]" >Articles</span>
       </h2>
       <p class="text-gray-600">Stay updated with our most recent publications</p>
     </div>
@@ -373,7 +375,7 @@
   {% if is_paginated %}
   <div class="flex justify-center items-center gap-2 mb-8">
     {% if page_obj.has_previous %}
-    <a href="?{% url_replace request 'page' page_obj.previous_page_number %}" class="w-8 h-8 flex items-center justify-center rounded-full border">
+    <a href="?{% url_replace request 'page' page_obj.previous_page_number %}#latestArticles" class="w-8 h-8 flex items-center justify-center rounded-full border">
       <i class="fas fa-chevron-left text-sm"></i>
     </a>
     {% endif %}
@@ -387,7 +389,7 @@
     {% endfor %}
     
     {% if page_obj.has_next %}
-    <a href="?{% url_replace request 'page' page_obj.next_page_number %}" class="w-8 h-8 flex items-center justify-center rounded-full border">
+    <a href="?{% url_replace request 'page' page_obj.next_page_number %}#latestArticles" class="w-8 h-8 flex items-center justify-center rounded-full border">
       <i class="fas fa-chevron-right text-sm"></i>
     </a>
     {% endif %}
