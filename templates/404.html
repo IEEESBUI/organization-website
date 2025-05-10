@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}404 - IEEE SBUI{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 100px 20px;
+    }
+
+    .error-code {
+        font-size: 10rem;
+        font-weight: bold;
+        color: #1a1a1a;
+    }
+
+    .error-message {
+        font-size: 1.5rem;
+        margin-top: 20px;
+        color: #555;
+    }
+
+    .home-link {
+        margin-top: 30px;
+        display: inline-block;
+        font-size: 1rem;
+        color: #007bff;
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-code">404</div>
+    <div class="error-message">The Page you're looking for isn't here.</div>
+    <a href="/" class="home-link">Back to main page</a>
+</div>
+{% endblock %}
