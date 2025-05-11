@@ -90,7 +90,7 @@ class Article(models.Model):
     excerpt = models.TextField(help_text="A short description of the article")
     content = models.TextField()  # TODO: ganti jadi rich text editor kalau mau, cuman tergantung kebutuhan juga https://medium.com/@yashnarsamiyev2/how-to-add-ckeditor-in-django-aa6de5a09862
     categories = models.ManyToManyField(Category, related_name='articles')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     is_featured = models.BooleanField(default=False)
