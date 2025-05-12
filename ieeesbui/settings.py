@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'about',
     'event',
     'article',
+    'articleDetails'
 ]
 
 MIDDLEWARE = [
