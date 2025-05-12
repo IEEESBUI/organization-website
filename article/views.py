@@ -1,5 +1,7 @@
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from .models import Article, Category
 from django.template.defaulttags import register
 
@@ -16,6 +18,7 @@ class ArticleListView(ListView):
     Methods:
         get_queryset(): Mengambil daftar artikel berdasarkan filter dan sorting
         get_context_data(): Menambahkan kategori dan artikel unggulan ke konteks
+        render_to_response(): Menangani respons AJAX
     Notes:
         - Artikel yang ditampilkan adalah artikel dengan status 'published'.
         - Artikel diurutkan berdasarkan tanggal pembuatan terbaru.
@@ -24,6 +27,7 @@ class ArticleListView(ListView):
         - Artikel dapat diurutkan berdasarkan tanggal terbaru, tanggal terlama, popularitas, atau abjad (A-Z atau Z-A).
         - Kategori yang ditampilkan diambil dari model Category.
         - Artikel unggulan diambil dari model Article dengan atribut is_featured=True.
+        - Mendukung respons AJAX untuk pembaruan dinamis.
     """
     model = Article
     template_name = 'article.html'
@@ -113,9 +117,76 @@ class ArticleListView(ListView):
             context['selected_category_objects'] = []
         
         return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        """
+        Override render_to_response to handle AJAX requests
+        Args:
+            context: Context data for the template
+            **response_kwargs: Additional response arguments
+        Returns:
+            HttpResponse or JsonResponse: Rendered template or JSON data
+        """
+        is_ajax_request = self.request.headers.get('X-Requested-With') == 'XMLHttpRequest' or self.request.GET.get('ajax') == 'true'
+        
+        if is_ajax_request:
+            # Determine if there's any search or filter applied
+            has_search_or_filter = bool(
+                self.request.GET.get('search') or 
+                self.request.GET.get('category') or 
+                self.request.GET.get('sort')
+            )
+            
+            # Render partial templates to strings
+            articles_html = render_to_string(
+                'partials/article_list.html',
+                {'articles': context['articles'], 'page_obj': context['page_obj']},
+                request=self.request
+            )
+            
+            active_filters_html = render_to_string(
+                'partials/active_filters.html',
+                {
+                    'request': self.request,
+                    'selected_category_objects': context['selected_category_objects']
+                },
+                request=self.request
+            )
+            
+            pagination_html = render_to_string(
+                'partials/pagination.html',
+                {
+                    'is_paginated': context['is_paginated'],
+                    'page_obj': context['page_obj'],
+                    'paginator': context['paginator'],
+                    'request': self.request
+                },
+                request=self.request
+            )
+            
+            # Return JSON response
+            return JsonResponse({
+                'articles_html': articles_html,
+                'active_filters_html': active_filters_html,
+                'pagination_html': pagination_html,
+                'has_search_or_filter': has_search_or_filter,
+                'total_articles': context['paginator'].count,
+                'current_page': context['page_obj'].number,
+                'total_pages': context['paginator'].num_pages
+            })
+        
+        # For non-AJAX requests, check if we need to set an initial state for the featured article
+        # This ensures the featured article is hidden on initial page load if there's a search query
+        context['has_search_or_filter'] = bool(
+            self.request.GET.get('search') or 
+            self.request.GET.get('category') or 
+            self.request.GET.get('sort')
+        )
+        
+        # Regular response for non-AJAX requests
+        return super().render_to_response(context, **response_kwargs)
 
 
-# TODO: bukan kerjaan aldo, bisa lanjutin sendiri sisanya hehe
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_detail.html'

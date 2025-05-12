@@ -4,6 +4,7 @@
 {% block title %}Articles - IEEE SBUI{% endblock %}
 
 {% block extra_css %}
+<!-- Add this CSS for the featured article transition -->
 <style>
   @font-face {
     font-family: "Helvetica Neue";
@@ -29,28 +30,28 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
+  }
 
-.animate-on-scroll {
-    opacity: 0;
-}
+  .animate-on-scroll {
+      opacity: 0;
+  }
 
-.animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-}
+  .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+  }
 
-.delay-100 {
-    animation-delay: 100ms;
-}
-.delay-200 {
-    animation-delay: 200ms;
-}
-.delay-300 {
-    animation-delay: 300ms;
-}
-.delay-400 {
-    animation-delay: 400ms;
-}
+  .delay-100 {
+      animation-delay: 100ms;
+  }
+  .delay-200 {
+      animation-delay: 200ms;
+  }
+  .delay-300 {
+      animation-delay: 300ms;
+  }
+  .delay-400 {
+      animation-delay: 400ms;
+  }
 
   /* Apply Helvetica Neue globally */
   body {
@@ -151,6 +152,19 @@
     overflow: hidden;
   }
 
+  /* Featured article transition */
+  #featuredArticleSection {
+    opacity: 1;
+    max-height: 1000px; /* Adjust based on your content */
+    transition: opacity 0.3s ease-out, max-height 0.3s ease-out;
+    overflow: hidden;
+  }
+
+  #featuredArticleSection.featured-hidden {
+    opacity: 0;
+    max-height: 0;
+  }
+
   /* Article card styles */
   .article-card {
     transition: transform 0.2s ease-in-out;
@@ -177,8 +191,6 @@
 
 {% block content %}
 <!-- Hero Section -->
-
-{% comment %} TODO: BIKIN BACKGROUND NYA BENTUK DIAMOND {% endcomment %}
 <section class="bg-gradient-to-r from-blue-900 via-[#f32929] to-blue-900 py-32 text-center">
   <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-on-scroll delay-400">Articles</h1>
   <p class="text-white max-w-xl mx-auto px-4 animate-on-scroll delay-400">
@@ -233,8 +245,7 @@
           </div>
           {% endfor %}
           <div class="dropdown-separator"></div>
-          {% comment %} TODO {% endcomment %}
-          <div class="dropdown-item text-center text-sm" id="">View All Articles</div>
+          <div class="dropdown-item text-center text-sm view-all-articles">View All Articles</div>
         </div>
       </div>
     </div>
@@ -242,37 +253,12 @@
 
   <!-- Active Filters Display -->
   <div class="mt-4" id="activeFilters">
-    {% if request.GET.search %}
-    <div class="filter-badge" data-filter-type="search" data-value="{{ request.GET.search }}">
-      Search: {{ request.GET.search }}
-      <button class="remove-filter">&times;</button>
-    </div>
-    {% endif %}
-    
-    {% if request.GET.sort %}
-    <div class="filter-badge" data-filter-type="sort" data-value="{{ request.GET.sort }}">
-      Sort: 
-      {% if request.GET.sort == 'recent' %}Most Recent
-      {% elif request.GET.sort == 'popular' %}Most Popular
-      {% elif request.GET.sort == 'oldest' %}Oldest First
-      {% elif request.GET.sort == 'az' %}A-Z
-      {% elif request.GET.sort == 'za' %}Z-A
-      {% endif %}
-      <button class="remove-filter">&times;</button>
-    </div>
-    {% endif %}
-    
-    {% for category in selected_category_objects %}
-    <div class="filter-badge" data-filter-type="category" data-value="{{ category.id }}">
-      Category: {{ category.name }}
-      <button class="remove-filter">&times;</button>
-    </div>
-    {% endfor %}
+    {% include "partials/active_filters.html" %}
   </div>
 </section>
 
 <!-- Featured Articles -->
-<section class="py-8 px-6 max-w-6xl mx-auto w-full" >
+<section class="py-8 px-6 max-w-6xl mx-auto w-full" id="featuredArticleSection" {% if has_search_or_filter %}class="featured-hidden" style="display: none;"{% endif %}>
   <div class="text-center mb-6 ">
     <h2 class="text-3xl md:text-4xl font-bold mb-2 animate-on-scroll delay-400">
       <span class="text-purple-800">Featured</span> <span class="text-[#f32929]">Articles</span>
@@ -322,264 +308,22 @@
       </h2>
       <p class="text-gray-600">Stay updated with our most recent publications</p>
     </div>
-    <a href="{% url 'articles' %}" class="hidden md:block border border-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-100">
+    <a href="#" class="hidden md:block border border-gray-300 px-4 py-2 rounded-full text-sm hover:bg-gray-100 view-all-articles">
       View All Articles
     </a>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="articlesContainer">
-    {% for article in articles %}
-    <div class="article-card border rounded-lg overflow-hidden animate-on-scroll delay-400" 
-         data-categories="{% for category in article.categories.all %}{{ category.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
-      <div class="relative w-full aspect-video">
-        {% if article.image %}
-        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="object-cover w-full h-full">
-        {% else %}
-        <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full">
-        {% endif %}
-      </div>
-      <div class="p-4">
-        <div class="flex justify-between items-center mb-2">
-          <div class="flex items-center text-xs text-gray-600">
-            <i class="far fa-calendar-alt mr-1"></i>
-            {{ article.created_at|date:"F d, Y" }}
-          </div>
-          <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">
-            {% with first_category=article.categories.first %}
-              {% if first_category %}
-                {{ first_category.name }}
-              {% else %}
-                Uncategorized
-              {% endif %}
-            {% endwith %}
-          </span>
-        </div>
-        <h3 class="font-bold mb-2">{{ article.title }}</h3>
-        <p class="text-sm text-gray-600 mb-3">{{ article.excerpt|truncatechars:100 }}</p>
-        <div class="flex justify-between items-center">
-          <div class="text-xs text-gray-600">By {{ article.author.get_full_name|default:article.author.username }}</div>
-          <a href="{% url 'article_detail' article.slug %}" class="text-xs text-[#f32929] hover:underline">
-            Read More →
-          </a>
-        </div>
-      </div>
-    </div>
-    {% empty %}
-    <div class="col-span-3 text-center py-8 animate-on-scroll delay-400">
-      <p class="text-gray-600">No articles found matching your criteria.</p>
-    </div>
-    {% endfor %}
+    {% include "partials/article_list.html" %}
   </div>
 
   <!-- Pagination -->
-  {% if is_paginated %}
-  <div class="flex justify-center items-center gap-2 mb-8">
-    {% if page_obj.has_previous %}
-    <a href="?{% url_replace request 'page' page_obj.previous_page_number %}#latestArticles" class="w-8 h-8 flex items-center justify-center rounded-full border">
-      <i class="fas fa-chevron-left text-sm"></i>
-    </a>
-    {% endif %}
-    
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <span class="pagination-dot active" aria-current="page"></span>
-      {% else %}
-        <a href="?{% url_replace request 'page' i %}" class="pagination-dot"></a>
-      {% endif %}
-    {% endfor %}
-    
-    {% if page_obj.has_next %}
-    <a href="?{% url_replace request 'page' page_obj.next_page_number %}#latestArticles" class="w-8 h-8 flex items-center justify-center rounded-full border">
-      <i class="fas fa-chevron-right text-sm"></i>
-    </a>
-    {% endif %}
+  <div class="pagination-container">
+    {% include "partials/pagination.html" %}
   </div>
-  {% endif %}
 </section>
 {% endblock %}
 
 {% block extra_js %}
-<script>
-          // Animation Observer
-          const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in-up');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all elements with animate-on-scroll class
-        document.querySelectorAll('.animate-on-scroll').forEach(element => {
-            observer.observe(element);
-        });
-
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // Dropdown functionality
-    const filterButton = document.getElementById('filterButton');
-    const filterContent = document.getElementById('filterContent');
-    const categoryButton = document.getElementById('categoryButton');
-    const categoryContent = document.getElementById('categoryContent');
-    
-    // Toggle filter dropdown
-    filterButton.addEventListener('click', function() {
-      filterContent.classList.toggle('show');
-      // Close other dropdown if open
-      categoryContent.classList.remove('show');
-    });
-    
-    // Toggle category dropdown
-    categoryButton.addEventListener('click', function() {
-      categoryContent.classList.toggle('show');
-      // Close other dropdown if open
-      filterContent.classList.remove('show');
-    });
-    
-    // Close dropdowns when clicking outside
-    window.addEventListener('click', function(event) {
-      if (!event.target.matches('#filterButton') && !filterContent.contains(event.target)) {
-        filterContent.classList.remove('show');
-      }
-      if (!event.target.matches('#categoryButton') && !categoryContent.contains(event.target)) {
-        categoryContent.classList.remove('show');
-      }
-    });
-    
-    // Handle sort selection
-    const radioItems = document.querySelectorAll('.radio-item');
-    radioItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const value = this.getAttribute('data-value');
-        const filterType = this.getAttribute('data-filter-type');
-        applyFilter(filterType, value);
-      });
-    });
-    
-    // Handle category selection
-    const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
-    categoryCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        // Get all selected categories
-        const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
-          .map(cb => cb.value);
-        
-        // Apply filter with all selected categories
-        applyFilter('category', selectedCategories.join(','));
-      });
-    });
-    
-    // View all categories
-    {% comment %} document.getElementById('viewAllCategories').addEventListener('click', function() {
-      window.location.href = "{% url 'categories' %}";
-    }); {% endcomment %}
-    
-    // Remove filter badges
-    const removeFilterButtons = document.querySelectorAll('.remove-filter');
-    removeFilterButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const badge = this.parentElement;
-        const filterType = badge.getAttribute('data-filter-type');
-        const value = badge.getAttribute('data-value');
-        
-        // Remove this filter
-        removeFilter(filterType, value);
-      });
-    });
-    
-    // Apply filter function
-    function applyFilter(type, value) {
-      // Get current URL and parameters
-      const url = new URL(window.location.href);
-      const params = new URLSearchParams(url.search);
-      
-      // Update or add the filter parameter
-      if (type === 'category') {
-        // Handle multiple categories
-        params.set(type, value);
-      } else {
-        params.set(type, value);
-      }
-      
-      // Reset to page 1 when applying a new filter
-      params.set('page', '1');
-      
-      // Redirect to the filtered URL
-      window.location.href = `${url.pathname}?${params.toString()}`;
-    }
-    
-    // Remove filter function
-    function removeFilter(type, value) {
-      // Get current URL and parameters
-      const url = new URL(window.location.href);
-      const params = new URLSearchParams(url.search);
-      
-      if (type === 'category') {
-        // Handle removing a single category from potentially multiple
-        const currentCategories = params.get('category')?.split(',') || [];
-        const updatedCategories = currentCategories.filter(cat => cat !== value);
-        
-        if (updatedCategories.length > 0) {
-          params.set('category', updatedCategories.join(','));
-        } else {
-          params.delete('category');
-        }
-      } else {
-        // Remove the parameter completely
-        params.delete(type);
-      }
-      
-      // Redirect to the updated URL
-      window.location.href = `${url.pathname}?${params.toString()}`;
-    }
-    
-    // Client-side filtering for immediate feedback
-    function filterArticles() {
-      const articles = document.querySelectorAll('.article-card');
-      const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
-        .map(cb => cb.value);
-      
-      if (selectedCategories.length === 0) {
-        // Show all articles if no categories selected
-        articles.forEach(article => {
-          article.style.display = 'block';
-        });
-        return;
-      }
-      
-      articles.forEach(article => {
-        const articleCategories = article.getAttribute('data-categories').split(',');
-        const hasMatchingCategory = articleCategories.some(cat => selectedCategories.includes(cat));
-        
-        if (hasMatchingCategory) {
-          article.style.display = 'block';
-        } else {
-          article.style.display = 'none';
-        }
-      });
-    }
-    
-    // Add event listener for search form submission
-    document.getElementById('searchForm').addEventListener('submit', function(e) {
-      const searchInput = this.querySelector('input[name="search"]');
-      if (searchInput.value.trim() === '') {
-        e.preventDefault();
-        // Remove search parameter if it exists
-        const url = new URL(window.location.href);
-        const params = new URLSearchParams(url.search);
-        if (params.has('search')) {
-          params.delete('search');
-          window.location.href = `${url.pathname}?${params.toString()}`;
-        }
-      }
-    });
-  });
-</script>
+<script src="{% static 'js/article-ajax.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% if request.GET.search %}
+<div class="filter-badge" data-filter-type="search" data-value="{{ request.GET.search }}">
+  Search: {{ request.GET.search }}
+  <button class="remove-filter">&times;</button>
+</div>
+{% endif %}
+
+{% if request.GET.sort %}
+<div class="filter-badge" data-filter-type="sort" data-value="{{ request.GET.sort }}">
+  Sort: 
+  {% if request.GET.sort == 'recent' %}Most Recent
+  {% elif request.GET.sort == 'popular' %}Most Popular
+  {% elif request.GET.sort == 'oldest' %}Oldest First
+  {% elif request.GET.sort == 'az' %}A-Z
+  {% elif request.GET.sort == 'za' %}Z-A
+  {% endif %}
+  <button class="remove-filter">&times;</button>
+</div>
+{% endif %}
+
+{% for category in selected_category_objects %}
+<div class="filter-badge" data-filter-type="category" data-value="{{ category.id }}">
+  Category: {{ category.name }}
+  <button class="remove-filter">&times;</button>
+</div>
+{% endfor %}
