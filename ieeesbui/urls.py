@@ -26,6 +26,7 @@ urlpatterns = [
     path('divisions', include('divisions.urls')),
     path('event', include('event.urls')),
     path('article', include('article.urls')),
+    path('articleDetails',include('articleDetails.urls')),
 ]
 
 # Tambahkan konfigurasi untuk file media jika dalam mode debug
