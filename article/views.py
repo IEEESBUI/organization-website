@@ -34,16 +34,6 @@ class ArticleListView(ListView):
     context_object_name = 'articles'
     paginate_by = 3  # Show 3 articles per page
     
-    def get_paginate_by(self, queryset):
-        """
-        Override get_paginate_by to handle 'view_all' parameter
-        If 'view_all' is True, return None to disable pagination
-        """
-        view_all = self.request.GET.get('view_all') == 'true'
-        if view_all:
-            return None  # Disable pagination
-        return self.paginate_by
-    
     def get_queryset(self):
         """
         Mengambil daftar artikel berdasarkan filter dan sorting
@@ -126,9 +116,6 @@ class ArticleListView(ListView):
         else:
             context['selected_category_objects'] = []
         
-        # Add view_all parameter to context
-        context['view_all'] = self.request.GET.get('view_all') == 'true'
-        
         return context
     
     def render_to_response(self, context, **response_kwargs):
@@ -147,14 +134,13 @@ class ArticleListView(ListView):
             has_search_or_filter = bool(
                 self.request.GET.get('search') or 
                 self.request.GET.get('category') or 
-                self.request.GET.get('sort') or
-                self.request.GET.get('view_all') == 'true'
+                self.request.GET.get('sort')
             )
             
             # Render partial templates to strings
             articles_html = render_to_string(
                 'partials/article_list.html',
-                {'articles': context['articles'], 'page_obj': context.get('page_obj')},
+                {'articles': context['articles'], 'page_obj': context['page_obj']},
                 request=self.request
             )
             
@@ -162,26 +148,21 @@ class ArticleListView(ListView):
                 'partials/active_filters.html',
                 {
                     'request': self.request,
-                    'selected_category_objects': context['selected_category_objects'],
-                    'view_all': context.get('view_all', False)
+                    'selected_category_objects': context['selected_category_objects']
                 },
                 request=self.request
             )
             
-            # Only render pagination if not in view_all mode
-            if self.request.GET.get('view_all') == 'true':
-                pagination_html = ''
-            else:
-                pagination_html = render_to_string(
-                    'partials/pagination.html',
-                    {
-                        'is_paginated': context.get('is_paginated', False),
-                        'page_obj': context.get('page_obj'),
-                        'paginator': context.get('paginator'),
-                        'request': self.request
-                    },
-                    request=self.request
-                )
+            pagination_html = render_to_string(
+                'partials/pagination.html',
+                {
+                    'is_paginated': context['is_paginated'],
+                    'page_obj': context['page_obj'],
+                    'paginator': context['paginator'],
+                    'request': self.request
+                },
+                request=self.request
+            )
             
             # Return JSON response
             return JsonResponse({
@@ -189,10 +170,9 @@ class ArticleListView(ListView):
                 'active_filters_html': active_filters_html,
                 'pagination_html': pagination_html,
                 'has_search_or_filter': has_search_or_filter,
-                'total_articles': context.get('paginator').count if context.get('paginator') else len(context['articles']),
-                'current_page': context.get('page_obj').number if context.get('page_obj') else 1,
-                'total_pages': context.get('paginator').num_pages if context.get('paginator') else 1,
-                'view_all': self.request.GET.get('view_all') == 'true'
+                'total_articles': context['paginator'].count,
+                'current_page': context['page_obj'].number,
+                'total_pages': context['paginator'].num_pages
             })
         
         # For non-AJAX requests, check if we need to set an initial state for the featured article
@@ -200,8 +180,7 @@ class ArticleListView(ListView):
         context['has_search_or_filter'] = bool(
             self.request.GET.get('search') or 
             self.request.GET.get('category') or 
-            self.request.GET.get('sort') or
-            self.request.GET.get('view_all') == 'true'
+            self.request.GET.get('sort')
         )
         
         # Regular response for non-AJAX requests
