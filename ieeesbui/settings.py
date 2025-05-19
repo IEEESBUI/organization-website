@@ -42,8 +42,16 @@ INSTALLED_APPS = [
     'about',
     'event',
     'article',
-    'articleDetails'
+    'articleDetails',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 ]
+
+# TAILWIND SETUP
+TAILWIND_APP_NAME = 'theme'
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'ieeesbui.urls'

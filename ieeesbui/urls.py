@@ -27,6 +27,7 @@ urlpatterns = [
     path('event', include('event.urls')),
     path('article', include('article.urls')),
     path('articleDetails',include('articleDetails.urls')),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 # Tambahkan konfigurasi untuk file media jika dalam mode debug

@@ -1,3 +1,4 @@
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,41 +7,8 @@
     {% load static %}
     <title>{% block title %}IEEE SBUI{% endblock %}</title>
     <link rel="icon" href="{% static 'images/ieee-sbui-logo-round.png' %}" type="image/png">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    primary: {
-                        DEFAULT: '#c62828',
-                        50: '#fff1f1',
-                        100: '#ffe1e1',
-                        200: '#ffc7c7',
-                        300: '#ffa0a0',
-                        400: '#ff6b6b',
-                        500: '#f83b3b',
-                        600: '#e52a2a',
-                        700: '#c62828',
-                        800: '#9c1f1f',
-                        900: '#7e1e1e',
-                        950: '#440808',
-                    },
-                },
-                animation: {
-                    'fade-in': 'fadeIn 1s ease-out forwards',
-                },
-                keyframes: {
-                    fadeIn: {
-                        '0%': { opacity: '0' },
-                        '100%': { opacity: '1' },
-                    },
-                }
-            }
-        }
-    }
-    </script>
+    {% tailwind_css %}
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Custom CSS -->
