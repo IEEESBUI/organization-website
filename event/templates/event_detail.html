@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ event.title }} - IEEE SBUI{% endblock %}
+
+{% block content %}
+<style>
+    /* Event detail container */
+    .event-detail-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        font-family: Arial, sans-serif;
+    }
+    
+    /* Card container */
+    .event-card-detail {
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+    
+    /* Event image */
+    .event-image-container {
+        width: 100%;
+        background-color: #FF9B50;
+        padding: 1rem;
+        border-radius: 1rem 1rem 0 0;
+    }
+    
+    .event-image {
+        width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        max-height: 300px;
+        object-fit: cover;
+    }
+    
+    /* Event title */
+    .event-title {
+        color: #4B0082;
+        font-size: 1.8rem;
+        font-weight: 700;
+        padding: 1.5rem;
+        margin: 0;
+    }
+    
+    /* Event details section */
+    .event-details {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    /* Section headers and content */
+    .section-header {
+        color: #E34234;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 1.5rem 0 0.5rem 0;
+    }
+    
+    .section-content {
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        padding-left: 1rem;
+    }
+    
+    .event-meta {
+        color: #FF8C00;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 1.5rem 0 0.5rem 0;
+    }
+    
+    /* Footer */
+    .card-footer {
+        background: linear-gradient(90deg, #F7BF4E 0%, #F32929 51%, #090EA7 100%);
+        color: white;
+        padding: 2rem 1.5rem;
+    }
+    
+    .footer-contact {
+        margin-top: 1rem;
+    }
+    
+    .footer-contact h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<div class="event-detail-container">
+    <div class="event-card-detail">
+        <!-- Event Image -->
+        <div class="event-image-container">
+            <img src="{{ event.image_url }}" alt="{{ event.title }}" class="event-image">
+        </div>
+        
+        <!-- Event Title -->
+        <h1 class="event-title">{{ event.title }}</h1>
+        
+        <!-- Event Details -->
+        <div class="event-details">
+            <h2 class="section-header">Deskripsi</h2>
+            <div class="section-content">
+                <p>{{ event.description|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }}</p>
+            </div>
+            
+            <h2 class="event-meta">Tanggal</h2>
+            <div class="section-content">
+                <p>{{ event.date|date:"l, F j, Y"|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }}</p>
+            </div>
+            
+            <h2 class="event-meta">Waktu</h2>
+            <div class="section-content">
+                <p>{{ event.time|time:"g:i A"|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }}</p>
+            </div>
+            
+            <h2 class="event-meta">Lokasi</h2>
+            <div class="section-content">
+                <p>{{ event.location|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }}</p>
+            </div>
+        </div>
+{% endblock %}

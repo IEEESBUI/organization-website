@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Events - IEEE SBUI{% endblock %}
+
+{% block content %}
+<style>
+    .events-container {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        background-color: #f8f9fa;
+    }
+    
+    /* Custom Gradient with increased height */
+    .custom-gradient {
+        background: linear-gradient(to bottom right, #090EA7 0%, #F32929 25%, #F7BF4E 50%) bottom right / 50% 50% no-repeat, 
+                    linear-gradient(to bottom left, #090EA7 0%, #F32929 25%, #F7BF4E 50%) bottom left / 50% 50% no-repeat, 
+                    linear-gradient(to top left, #090EA7 0%, #F32929 25%, #F7BF4E 50%) top left / 50% 50% no-repeat, 
+                    linear-gradient(to top right, #090EA7 0%, #F32929 25%, #F7BF4E 50%) top right / 50% 50% no-repeat, 
+                    linear-gradient(90deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        color: white;
+        padding: 8rem 1rem; /* Increased from 4rem to 8rem for more height */
+        text-align: center;
+        min-height: 280px; /* Adding explicit minimum height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Container for centering content */
+    .gradient-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    /* Hero title styling */
+    .hero-title {
+        font-size: 3rem; /* Increased from 2.5rem */
+        font-weight: 700;
+        margin-bottom: 1.5rem; /* Increased from 1rem */
+    }
+    
+    /* Hero description styling */
+    .hero-description {
+        font-size: 1.125rem;
+        margin-bottom: 0;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.5;
+    }
+    
+    /* Animation class for scroll effect if needed */
+    .animate-on-scroll {
+        animation: fadeIn 1s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Rest of your CSS styles for the page... */
+    
+    /* Event sections */
+    .events-section {
+        padding: 1rem;
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+    }
+    
+    .events-section h2 {
+        color: #333;
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Updated event cards container for one card per row */
+    .event-cards-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    /* Section header with subtitle */
+    .section-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+        color: #090EA7;
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-subtitle {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1.5rem 0;
+    }
+    
+    .pagination-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    
+    .pagination-dot.active {
+        background-color: #4361ee;
+    }
+    
+    /* Footer */
+    .ieee-footer {
+        background: linear-gradient(90deg, #F7BF4E, #F32929, #090EA7);
+        color: white;
+        padding: 2rem 1rem;
+    }
+    
+    /* Footer content */
+    .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .footer-section {
+        margin-bottom: 1.5rem;
+        min-width: 150px;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .footer-section a, .footer-section p {
+        color: white;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .social-icons a {
+        color: white;
+        font-size: 1.2rem;
+    }
+    
+    /* Desktop styles */
+    @media (min-width: 768px) {
+        .custom-gradient {
+            padding: 6rem 1rem; /* Still keeping it substantial on mobile */
+            min-height: 220px;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .events-section {
+            padding: 2rem;
+        }
+    }
+</style>
+
+<div class="events-container">
+    <section class="custom-gradient">
+        <div class="gradient-container">
+            <div>
+                <h1 class="hero-title">Events</h1>
+                <p class="hero-description">Discover workshops, seminars, competitions, and networking opportunities organized by IEEE SBUI</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Upcoming Events Section -->
+    <div class="events-section">
+        <div class="section-header">
+            <h2 class="section-title">Upcoming Events</h2>
+            <p class="section-subtitle">Join us for our upcoming workshops, seminars, and networking events</p>
+        </div>
+        
+        <div class="event-cards-container">
+            {% for event in upcoming_events %}
+                {% include "event_card.html" with event=event %}
+            {% empty %}
+                <p>No upcoming events at the moment. Stay tuned!</p>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination dots (shows when there are 3+ events) -->
+        {% if upcoming_events.count > 3 %}
+        <div class="pagination">
+            <div class="pagination-dot active"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Past Events Section -->
+    <div class="events-section">
+        <h2 class="section-title">Past Events</h2>
+        
+        <div class="event-cards-container">
+            {% for event in past_events %}
+                {% include "event_card.html" with event=event %}
+            {% empty %}
+                <p>No past events to display.</p>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination dots (shows when there are 3+ events) -->
+        {% if past_events.count > 3 %}
+        <div class="pagination">
+            <div class="pagination-dot active"></div>
+            <div class="pagination-dot"></div>
+            <div class="pagination-dot"></div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

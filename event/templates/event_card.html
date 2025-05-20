@@ -1,0 +1,39 @@
+{% load static %}
+{% block content %}
+<div class="event-card" style="display: flex; background: white; border-radius: 0.75rem; overflow: hidden; margin-bottom: 0.5rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); border: 1px solid #eaeaea; width: 100%;">
+    <!-- Image Section -->
+    <div style="width: 150px; min-width: 150px; padding: 15px;">
+        <img src="{{ event.image_url }}" alt="{{ event.title }}" style="width: 100%; height: 150px; border-radius: 0.5rem; object-fit: cover;">
+    </div>
+    
+    <!-- Content Section -->
+    <div style="padding: 15px 20px; flex: 1;">
+        <h3 style="font-weight: 700; font-size: 1.2rem; margin-top: 0; margin-bottom: 15px; color: #333;">{{ event.title }}</h3>
+        
+        <div style="display: flex; align-items: center; color: #666; font-size: 0.9rem; margin-bottom: 10px;">
+            <img src="{% static 'images/calendar.png' %}" alt="Date" style="width: 18px; height: 18px; margin-right: 10px;">
+            <span>{{ event.date|date:"F j, Y" }}</span>
+        </div>
+        
+        <div style="display: flex; align-items: center; color: #666; font-size: 0.9rem; margin-bottom: 10px;">
+            <img src="{% static 'images/clock.png' %}" alt="Time" style="width: 18px; height: 18px; margin-right: 10px;">
+            <span>{{ event.time|time:"g:i A" }}</span>
+        </div>
+        
+        <div style="display: flex; align-items: center; color: #666; font-size: 0.9rem; margin-bottom: 10px;">
+            <img src="{% static 'images/location.png' %}" alt="Location" style="width: 18px; height: 18px; margin-right: 10px;">
+            <span>{{ event.location }}</span>
+        </div>
+        
+        <!-- Description (Optional) - Truncated for card view -->
+        <p style="color: #666; font-size: 0.85rem; margin-top: 10px; margin-bottom: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+            {{ event.description }}
+        </p>
+    </div>
+    
+    <!-- Button Section -->
+    <div style="display: flex; align-items: center; padding-right: 15px;">
+        <a href="{{ event.get_absolute_url }}" style="background-color: #4361ee; color: white; border: none; padding: 8px 15px; border-radius: 0.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block; text-align: center;">Click For More</a>
+    </div>
+</div>
+{% endblock %}
