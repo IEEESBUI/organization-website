@@ -494,25 +494,122 @@
 
 <!-- Our Team Section -->
 <section class="py-12 bg-gray-50">
-    <div class="container mx-auto px-4">
-        <div style="width: 100%; text-align: center;">
-            <h2 class="text-3xl font-bold mb-8 text-center animate-on-scroll custom-text-gradient">Meet The Leaders</h2>
-        </div>        
-        <!-- Team carousel for mobile -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Team Member 1 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100">
-                <div class="p-1">
-                    <img src="{% static 'images/placeholder-person.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                    <h3 class="text-lg font-bold mb-1">Jane Doe</h3>
-                    <p class="text-gray-600 text-sm">President</p>
-                </div>
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-8 custom-text-gradient">Meet The Leaders</h2>
+    </div>
+
+ 
+    <!-- 1. President Section -->
+    <div class="flex justify-center mb-10">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+        <img src="{% static 'images/President&Vice.jpg' %}" alt="President" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4">
+        <div class="flex justify-between text-sm flex-col sm:flex-row sm:space-y-0 space-y-4">
+            <!-- Left (President) -->
+            <div class="text-left">
+            <h3 class="text-lg font-bold mb-1">Ignatius Cahyo</h3>
+            <p class="text-gray-600">President</p>
             </div>
-            
-            <!-- Additional team members would be here -->
+            <!-- Right (Vice President) -->
+            <div class="text-right">
+            <h3 class="text-lg font-bold mb-1">Naufal Hani</h3>
+            <p class="text-gray-600">Vice President</p>
+            </div>
+        </div>
         </div>
     </div>
+    </div>
+
+    <!-- 2. Secretary + Treasurer Section -->
+    <div class="flex flex-col sm:flex-row justify-center gap-6 mb-10 flex-wrap">
+
+    <!-- Secretary -->
+    <div class="flex justify-center w-full sm:w-auto">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+            <img src="{% static 'images/Secretary.jpg' %}" alt="Secretary" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+            <h3 class="text-lg font-bold mb-1">Raji Irfan Fauzi</h3>
+            <p class="text-gray-600 text-sm">Secretary</p>
+        </div>
+        </div>
+    </div>
+
+    <!-- Treasurer & Vice Treasurer -->
+    <div class="flex justify-center w-full sm:w-auto">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+            <img src="{% static 'images/Treasurer&Vice.jpg' %}" alt="Treasurer" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4">
+            <div class="flex justify-between text-sm flex-col sm:flex-row sm:space-y-0 space-y-4">
+            <!-- Treasurer -->
+            <div class="text-left">
+                <h3 class="text-lg font-bold mb-1">Danish Akmadira</h3>
+                <p class="text-gray-600">Treasurer</p>
+            </div>
+            <!-- Vice Treasurer -->
+            <div class="text-right">
+                <h3 class="text-lg font-bold mb-1">Andita</h3>
+                <p class="text-gray-600">Vice Treasurer</p>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+    <!-- 3. Directors Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  
+  <!-- Director of Education Development -->
+  <div class="flex justify-center">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+      <div class="p-1">
+        <img src="{% static 'images/DofEduDev.jpg' %}" alt="EduDev" class="w-full h-48 object-cover object-center">
+      </div>
+      <div class="p-4 text-center">
+        <h3 class="text-lg font-bold mb-1">Yemima Christabel</h3>
+        <p class="text-gray-600 text-sm">Director of Education Development</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Director of Public Relations -->
+  <div class="flex justify-center">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+      <div class="p-1">
+        <img src="{% static 'images/DofPR.jpg' %}" alt="PR" class="w-full h-48 object-cover object-center">
+      </div>
+      <div class="p-4 text-center">
+        <h3 class="text-lg font-bold mb-1">Afifah Thahirah</h3>
+        <p class="text-gray-600 text-sm">Director of Public Relations</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Director of Internal Operations -->
+  <div class="flex justify-center">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+      <div class="p-1">
+        <img src="{% static 'images/DofInOps.jpg' %}" alt="Internal" class="w-full h-48 object-cover object-center">
+      </div>
+      <div class="p-4 text-center">
+        <h3 class="text-lg font-bold mb-1">Alicia Kiyoumi</h3>
+        <p class="text-gray-600 text-sm">Internal Operations</p>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
 </section>
+
 {% endblock %}
