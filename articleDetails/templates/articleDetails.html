@@ -1,38 +1,72 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Article - IEEE SBUI{% endblock %}
+{% block title %}{{ article.title }} - IEEE SBUI{% endblock %}
 
 {% block content %}
 <!-- Hero section with red-blue-red gradient and larger image -->
 <div class="w-full bg-gradient-to-r from-red-700 via-blue-700 to-red-700 py-12 flex justify-center items-center">
     <div class="overflow-hidden rounded-lg shadow-lg border-4 border-white" style="width: 500px; height: 300px;">
-        <img src="{% static 'images/team-photo.jpg' %}" alt="Sample Image" class="object-cover w-full h-full">
+        {% if article.image %}
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="object-cover w-full h-full">
+        {% else %}
+            <img src="{% static 'images/team-photo.jpg' %}" alt="{{ article.title }}" class="object-cover w-full h-full">
+        {% endif %}
     </div>
 </div>
 
 <!-- Article content -->
 <div class="container mx-auto px-4 py-12 max-w-3xl">
-    <h1 class="text-4xl font-bold mb-2 mt-12">
-        <span class=" motion-preset-confetti inline-block">Judul Artikel</span>
-    </h1>
-    <p class="text-sm text-gray-500 mb-4">Team Writers - 6 February 1966</p>
+    <h1 class="text-4xl font-bold mb-2">{{ article.title }}</h1>
+    <p class="text-sm text-gray-500 mb-4">
+        {% if article.author %}{{ article.author }}{% else %}Team Writers{% endif %} - 
+        {{ article.created_at|date:"d F Y" }}
+    </p>
+    
     <div class="text-base text-gray-800 leading-6">
-        <p class="mb-8">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum as been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
-
-        <p class="mb-8">
-            Contrary to popular belief, Lorem Ipsum is not simply random text. 
-            It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
-            Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. 
-            The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-        </p>
-        <p class="pb-16">skibidi amongus. ඞ</p>
+        {{ article.content|safe }}
+    </div>
+    
+    <!-- Categories -->
+    {% comment %} {% if article.categories.all %}
+    <div class="mt-8">
+        <h3 class="text-lg font-semibold mb-2">Categories:</h3>
+        <div class="flex flex-wrap gap-2">
+            {% for category in article.categories.all %}
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ category.name }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %} {% endcomment %}
+    
+    {% comment %} <!-- Related Articles -->
+    {% if related_articles %}
+    <div class="mt-12 border-t pt-8">
+        <h3 class="text-2xl font-bold mb-6">Related Articles</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for related in related_articles %}
+            <div class="border rounded-lg overflow-hidden shadow-md">
+                <div class="h-40 overflow-hidden">
+                    {% if related.featured_image %}
+                        <img src="{{ related.featured_image.url }}" alt="{{ related.title }}" class="w-full h-full object-cover">
+                    {% else %}
+                        <img src="{% static 'images/team-photo.jpg' %}" alt="{{ related.title }}" class="w-full h-full object-cover">
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <h4 class="font-bold text-lg mb-2 line-clamp-2">{{ related.title }}</h4>
+                    <p class="text-sm text-gray-500 mb-2">{{ related.published_date|date:"d F Y" }}</p>
+                    <a href="{% url 'article:detail' related.slug %}" class="text-blue-700 hover:underline">Read more</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %} {% endcomment %}
+    
+    <!-- View count -->
+    <div class="mt-8 text-sm text-gray-500">
+        <p>Views: {{ article.view_count }}</p>
     </div>
 </div>
 {% endblock %}

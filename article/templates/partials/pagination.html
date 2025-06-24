@@ -1,0 +1,25 @@
+{% load static %}
+
+{% if is_paginated %}
+<div class="flex justify-center items-center gap-2 mb-8 pagination-container">
+  {% if page_obj.has_previous %}
+  <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full border pagination-link" data-page="{{ page_obj.previous_page_number }}">
+    <i class="fas fa-chevron-left text-sm"></i>
+  </a>
+  {% endif %}
+  
+  {% for i in paginator.page_range %}
+    {% if page_obj.number == i %}
+      <span class="pagination-dot active" aria-current="page"></span>
+    {% else %}
+      <a href="#" class="pagination-dot pagination-link" data-page="{{ i }}"></a>
+    {% endif %}
+  {% endfor %}
+  
+  {% if page_obj.has_next %}
+  <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full border pagination-link" data-page="{{ page_obj.next_page_number }}">
+    <i class="fas fa-chevron-right text-sm"></i>
+  </a>
+  {% endif %}
+</div>
+{% endif %}
