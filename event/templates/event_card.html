@@ -1,39 +1,35 @@
 {% load static %}
-{% block content %}
-<div class="event-card" style="display: flex; background: white; border-radius: 0.75rem; overflow: hidden; margin-bottom: 0.5rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); border: 1px solid #eaeaea; width: 100%;">
-    <!-- Image Section -->
-    <div style="width: 150px; min-width: 150px; padding: 15px;">
-        <img src="{{ event.image_url }}" alt="{{ event.title }}" style="width: 100%; height: 150px; border-radius: 0.5rem; object-fit: cover;">
-    </div>
-    
-    <!-- Content Section -->
-    <div style="padding: 15px 20px; flex: 1;">
-        <h3 style="font-weight: 700; font-size: 1.2rem; margin-top: 0; margin-bottom: 15px; color: #333;">{{ event.title }}</h3>
-        
-        <div style="display: flex; align-items: center; color: #666; font-size: 0.9rem; margin-bottom: 10px;">
-            <img src="{% static 'images/calendar.png' %}" alt="Date" style="width: 18px; height: 18px; margin-right: 10px;">
-            <span>{{ event.date|date:"F j, Y" }}</span>
+<div class="event-card border rounded-lg overflow-hidden bg-white shadow-md flex flex-col md:flex-row mb-6 animate-on-scroll delay-400">
+  <!-- Image Section -->
+  <div class="relative w-full md:w-1/4 aspect-video md:aspect-auto md:h-auto">
+    {% if event.image_url %}
+      <img src="{{ event.image_url }}" alt="{{ event.title }}" class="object-cover w-full h-full md:h-full md:w-full">
+    {% else %}
+      <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full md:h-full md:w-full">
+    {% endif %}
+  </div>
+  <!-- Content Section -->
+  <div class="flex-1 p-6 flex flex-col justify-between">
+    <div>
+      <h3 class="text-2xl font-bold mb-2 text-gray-900">{{ event.title }}</h3>
+      <div class="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
+        <div class="flex items-center">
+          <img src="{% static 'images/calendar.png' %}" alt="Date" class="w-5 h-5 mr-2">
+          <span>{{ event.date|date:"F j, Y" }}</span>
         </div>
-        
-        <div style="display: flex; align-items: center; color: #666; font-size: 0.9rem; margin-bottom: 10px;">
-            <img src="{% static 'images/clock.png' %}" alt="Time" style="width: 18px; height: 18px; margin-right: 10px;">
-            <span>{{ event.time|time:"g:i A" }}</span>
+        <div class="flex items-center">
+          <img src="{% static 'images/clock.png' %}" alt="Time" class="w-5 h-5 mr-2">
+          <span>{{ event.time|time:"g:i A" }}</span>
         </div>
-        
-        <div style="display: flex; align-items: center; color: #666; font-size: 0.9rem; margin-bottom: 10px;">
-            <img src="{% static 'images/location.png' %}" alt="Location" style="width: 18px; height: 18px; margin-right: 10px;">
-            <span>{{ event.location }}</span>
+        <div class="flex items-center">
+          <img src="{% static 'images/location.png' %}" alt="Location" class="w-5 h-5 mr-2">
+          <span>{{ event.location }}</span>
         </div>
-        
-        <!-- Description (Optional) - Truncated for card view -->
-        <p style="color: #666; font-size: 0.85rem; margin-top: 10px; margin-bottom: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-            {{ event.description }}
-        </p>
+      </div>
+      <p class="text-gray-700 text-sm mb-4 line-clamp-2">{{ event.description }}</p>
     </div>
-    
-    <!-- Button Section -->
-    <div style="display: flex; align-items: center; padding-right: 15px;">
-        <a href="{{ event.get_absolute_url }}" style="background-color: #4361ee; color: white; border: none; padding: 8px 15px; border-radius: 0.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block; text-align: center;">Click For More</a>
+    <div class="flex justify-end">
+      <a href="{{ event.get_absolute_url }}" class="bg-[#4361ee] hover:bg-[#274bb6] text-white px-5 py-2 rounded-full text-sm font-semibold transition-colors">Click For More</a>
     </div>
+  </div>
 </div>
-{% endblock %}

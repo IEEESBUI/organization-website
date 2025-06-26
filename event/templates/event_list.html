@@ -5,6 +5,28 @@
 
 {% block content %}
 <style>
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueHeavy_0.otf" %}') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueLight_0.otf" %}') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    h1, h2, h3, h4, h5, h6, .section-title {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 700;
+    }
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 300;
+    }
     .events-container {
         padding: 0;
         margin: 0;
@@ -14,15 +36,11 @@
     
     /* Custom Gradient with increased height */
     .custom-gradient {
-        background: linear-gradient(to bottom right, #090EA7 0%, #F32929 25%, #F7BF4E 50%) bottom right / 50% 50% no-repeat, 
-                    linear-gradient(to bottom left, #090EA7 0%, #F32929 25%, #F7BF4E 50%) bottom left / 50% 50% no-repeat, 
-                    linear-gradient(to top left, #090EA7 0%, #F32929 25%, #F7BF4E 50%) top left / 50% 50% no-repeat, 
-                    linear-gradient(to top right, #090EA7 0%, #F32929 25%, #F7BF4E 50%) top right / 50% 50% no-repeat, 
-                    linear-gradient(90deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        background: linear-gradient(79deg, #F7BF4E 0%, #F32929 51%, #090EA7 100%);
         color: white;
-        padding: 8rem 1rem; /* Increased from 4rem to 8rem for more height */
+        padding: 7rem 1rem 6rem 1rem;
         text-align: center;
-        min-height: 280px; /* Adding explicit minimum height */
+        min-height: 340px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -37,19 +55,22 @@
     
     /* Hero title styling */
     .hero-title {
-        font-size: 3rem; /* Increased from 2.5rem */
+        font-size: 4rem;
         font-weight: 700;
-        margin-bottom: 1.5rem; /* Increased from 1rem */
+        margin-bottom: 2rem;
+        color: #fff;
+        letter-spacing: -1px;
     }
     
     /* Hero description styling */
     .hero-description {
-        font-size: 1.125rem;
+        font-size: 1.5rem;
         margin-bottom: 0;
-        max-width: 600px;
+        max-width: 700px;
         margin-left: auto;
         margin-right: auto;
         line-height: 1.5;
+        color: #fff;
     }
     
     /* Animation class for scroll effect if needed */
@@ -82,24 +103,34 @@
     .event-cards-container {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 2.5rem;
     }
     
     /* Section header with subtitle */
     .section-header {
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
     }
     
     .section-title {
-        color: #090EA7;
+        font-size: 2.5rem;
         font-weight: 700;
-        font-size: 1.8rem;
         margin-bottom: 0.5rem;
+        background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        display: inline-block;
+        text-align: center;
+        width: 100%;
     }
     
     .section-subtitle {
-        color: #666;
-        font-size: 0.9rem;
+        color: #222;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        text-align: center;
     }
     
     /* Pagination */
@@ -107,20 +138,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 1.5rem 0;
+        margin: 2rem 0 0 0;
     }
     
     .pagination-dot {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background-color: #ccc;
-        margin: 0 5px;
+        margin: 0 6px;
         cursor: pointer;
+        transition: background 0.2s;
     }
     
     .pagination-dot.active {
-        background-color: #4361ee;
+        background-color: #090EA7;
     }
     
     /* Footer */
@@ -170,20 +202,26 @@
     /* Desktop styles */
     @media (min-width: 768px) {
         .custom-gradient {
-            padding: 6rem 1rem; /* Still keeping it substantial on mobile */
-            min-height: 220px;
+            padding: 10rem 1rem 8rem 1rem;
+            min-height: 420px;
         }
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 5rem;
         }
-        
-        .events-section {
-            padding: 2rem;
+        .hero-description {
+            font-size: 1.7rem;
+        }
+        .section-title {
+            font-size: 3rem;
+        }
+        .event-cards-container {
+            gap: 2.5rem;
         }
     }
 </style>
 
 <div class="events-container">
+    <!-- Hero Section -->
     <section class="custom-gradient">
         <div class="gradient-container">
             <div>
@@ -194,50 +232,116 @@
     </section>
     
     <!-- Upcoming Events Section -->
-    <div class="events-section">
-        <div class="section-header">
-            <h2 class="section-title">Upcoming Events</h2>
-            <p class="section-subtitle">Join us for our upcoming workshops, seminars, and networking events</p>
+    <div class="events-section" style="max-width: 1100px; margin: 0 auto 3rem auto;">
+        <div class="section-header" style="margin-bottom: 2rem;">
+            <h2 class="section-title">Upcoming <span style="color:#F32929; background: none; -webkit-text-fill-color: initial;">Events</span></h2>
+            <div class="section-subtitle">Join us for our upcoming workshops, seminars, and networking events</div>
         </div>
-        
-        <div class="event-cards-container">
+        <div class="event-cards-container" id="upcoming-events-list">
             {% for event in upcoming_events %}
-                {% include "event_card.html" with event=event %}
+                <div class="event-card-wrapper" data-index="{{ forloop.counter0 }}">
+                    {% include "event_card.html" with event=event %}
+                </div>
             {% empty %}
-                <p>No upcoming events at the moment. Stay tuned!</p>
+                <p style="text-align:center; font-size:1.3rem; color:#888; margin:2rem 0; font-weight:500;">No upcoming events at the moment. Stay tuned!</p>
             {% endfor %}
         </div>
-        
-        <!-- Pagination dots (shows when there are 3+ events) -->
-        {% if upcoming_events.count > 3 %}
-        <div class="pagination">
-            <div class="pagination-dot active"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
+        {% if upcoming_events|length > 3 %}
+        <div class="pagination" id="upcoming-pagination-wrapper">
+            <button class="pagination-arrow" id="upcoming-arrow-left" aria-label="Previous" type="button" style="background:none;border:none;outline:none;cursor:pointer;padding:0 10px;font-size:1.5rem;display:flex;align-items:center;">
+                <svg width="24" height="24" fill="none" stroke="#090EA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div id="upcoming-pagination" style="display:flex;"></div>
+            <button class="pagination-arrow" id="upcoming-arrow-right" aria-label="Next" type="button" style="background:none;border:none;outline:none;cursor:pointer;padding:0 10px;font-size:1.5rem;display:flex;align-items:center;">
+                <svg width="24" height="24" fill="none" stroke="#090EA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+            </button>
         </div>
         {% endif %}
     </div>
     
     <!-- Past Events Section -->
-    <div class="events-section">
-        <h2 class="section-title">Past Events</h2>
-        
-        <div class="event-cards-container">
+    <div class="events-section" style="max-width: 1100px; margin: 0 auto 3rem auto;">
+        <div class="section-header" style="margin-bottom: 2rem;">
+            <h2 class="section-title">Past <span style="color:#F32929; background: none; -webkit-text-fill-color: initial;">Events</span></h2>
+        </div>
+        <div class="event-cards-container" id="past-events-list">
             {% for event in past_events %}
-                {% include "event_card.html" with event=event %}
+                <div class="event-card-wrapper" data-index="{{ forloop.counter0 }}">
+                    {% include "event_card.html" with event=event %}
+                </div>
             {% empty %}
-                <p>No past events to display.</p>
+                <p style="text-align:center; font-size:1.3rem; color:#888; margin:2rem 0; font-weight:500;">No past events to display.</p>
             {% endfor %}
         </div>
-        
-        <!-- Pagination dots (shows when there are 3+ events) -->
-        {% if past_events.count > 3 %}
-        <div class="pagination">
-            <div class="pagination-dot active"></div>
-            <div class="pagination-dot"></div>
-            <div class="pagination-dot"></div>
+        {% if past_events|length > 3 %}
+        <div class="pagination" id="past-pagination-wrapper">
+            <button class="pagination-arrow" id="past-arrow-left" aria-label="Previous" type="button" style="background:none;border:none;outline:none;cursor:pointer;padding:0 10px;font-size:1.5rem;display:flex;align-items:center;">
+                <svg width="24" height="24" fill="none" stroke="#090EA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div id="past-pagination" style="display:flex;"></div>
+            <button class="pagination-arrow" id="past-arrow-right" aria-label="Next" type="button" style="background:none;border:none;outline:none;cursor:pointer;padding:0 10px;font-size:1.5rem;display:flex;align-items:center;">
+                <svg width="24" height="24" fill="none" stroke="#090EA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+            </button>
         </div>
         {% endif %}
     </div>
 </div>
+
+<script>
+function setupEventPagination(listId, pagId, leftArrowId, rightArrowId) {
+    const container = document.getElementById(listId);
+    if (!container) return;
+    const cards = Array.from(container.querySelectorAll('.event-card-wrapper'));
+    const perPage = 3;
+    const total = cards.length;
+    if (total <= perPage) return;
+    const pageCount = Math.ceil(total / perPage);
+    let currentPage = 0;
+    // Render dots
+    const pag = document.getElementById(pagId);
+    pag.innerHTML = '';
+    for (let i = 0; i < pageCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'pagination-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => {
+            showPage(i);
+        });
+        pag.appendChild(dot);
+    }
+    // Arrow logic
+    const leftArrow = document.getElementById(leftArrowId);
+    const rightArrow = document.getElementById(rightArrowId);
+    if (leftArrow && rightArrow) {
+        leftArrow.addEventListener('click', () => {
+            if (currentPage > 0) showPage(currentPage - 1);
+        });
+        rightArrow.addEventListener('click', () => {
+            if (currentPage < pageCount - 1) showPage(currentPage + 1);
+        });
+    }
+    function showPage(page) {
+        currentPage = page;
+        cards.forEach((card, idx) => {
+            if (idx >= page * perPage && idx < (page + 1) * perPage) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        pag.querySelectorAll('.pagination-dot').forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === page);
+        });
+        // Disable/enable arrows
+        if (leftArrow) leftArrow.disabled = (currentPage === 0);
+        if (rightArrow) rightArrow.disabled = (currentPage === pageCount - 1);
+        if (leftArrow) leftArrow.style.opacity = (currentPage === 0) ? 0.4 : 1;
+        if (rightArrow) rightArrow.style.opacity = (currentPage === pageCount - 1) ? 0.4 : 1;
+    }
+    showPage(0);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    setupEventPagination('upcoming-events-list', 'upcoming-pagination', 'upcoming-arrow-left', 'upcoming-arrow-right');
+    setupEventPagination('past-events-list', 'past-pagination', 'past-arrow-left', 'past-arrow-right');
+});
+</script>
 {% endblock %}
