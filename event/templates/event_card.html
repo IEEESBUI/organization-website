@@ -1,0 +1,35 @@
+{% load static %}
+<div class="event-card border rounded-lg overflow-hidden bg-white shadow-md flex flex-col md:flex-row mb-6 animate-on-scroll delay-400">
+  <!-- Image Section -->
+  <div class="relative w-full md:w-1/4 aspect-video md:aspect-auto md:h-auto">
+    {% if event.image_url %}
+      <img src="{{ event.image_url }}" alt="{{ event.title }}" class="object-cover w-full h-full md:h-full md:w-full">
+    {% else %}
+      <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full md:h-full md:w-full">
+    {% endif %}
+  </div>
+  <!-- Content Section -->
+  <div class="flex-1 p-6 flex flex-col justify-between">
+    <div>
+      <h3 class="text-2xl font-bold mb-2 text-gray-900">{{ event.title }}</h3>
+      <div class="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
+        <div class="flex items-center">
+          <img src="{% static 'images/calendar.png' %}" alt="Date" class="w-5 h-5 mr-2">
+          <span>{{ event.date|date:"F j, Y" }}</span>
+        </div>
+        <div class="flex items-center">
+          <img src="{% static 'images/clock.png' %}" alt="Time" class="w-5 h-5 mr-2">
+          <span>{{ event.time|time:"g:i A" }}</span>
+        </div>
+        <div class="flex items-center">
+          <img src="{% static 'images/location.png' %}" alt="Location" class="w-5 h-5 mr-2">
+          <span>{{ event.location }}</span>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm mb-4 line-clamp-2">{{ event.description }}</p>
+    </div>
+    <div class="flex justify-end">
+      <a href="{{ event.get_absolute_url }}" class="bg-[#4361ee] hover:bg-[#274bb6] text-white px-5 py-2 rounded-full text-sm font-semibold transition-colors">Click For More</a>
+    </div>
+  </div>
+</div>

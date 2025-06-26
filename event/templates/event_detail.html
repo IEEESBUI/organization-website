@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ event.title }} - IEEE SBUI{% endblock %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueHeavy_0.otf" %}') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Neue';
+        src: url('{% static "fonts/HelveticaNeueLight_0.otf" %}') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 300;
+    }
+    h1, h2, h3, h4, h5, h6, .gradient-title, .gradient-section-title {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 700;
+    }
+    .event-detail-gradient {
+        background: #fff;
+        padding-bottom: 3rem;
+    }
+    .event-detail-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2.5rem 1rem 3rem 1rem;
+    }
+    .gradient-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 2.5rem;
+        margin-top: 0;
+        background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+    .event-image-gradient {
+        background: linear-gradient(79deg, #F7BF4E 0%, #F32929 51%, #090EA7 100%);
+        border-radius: 1.5rem;
+        padding: 2rem 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2.5rem;
+    }
+    .event-image {
+        border-radius: 1rem;
+        max-width: 100%;
+        max-height: 350px;
+        object-fit: cover;
+        box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+        background: #fff;
+    }
+    .gradient-section-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-top: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+    .event-section-content {
+        font-size: 1.15rem;
+        color: #222;
+        margin-bottom: 1.5rem;
+        margin-top: 0.5rem;
+        line-height: 1.7;
+    }
+    @media (max-width: 600px) {
+        .gradient-title { font-size: 2.1rem; }
+        .gradient-section-title { font-size: 1.4rem; }
+        .event-image-gradient { padding: 1rem 0.5rem; }
+    }
+</style>
+<div class="event-detail-gradient">
+  <div class="event-detail-container">
+    <h1 class="gradient-title">{{ event.title }}</h1>
+    <div class="event-image-gradient">
+      <img src="{{ event.image_url }}" alt="{{ event.title }}" class="event-image">
+    </div>
+    <div>
+      <h2 class="gradient-section-title">Deskripsi</h2>
+      <div class="event-section-content">
+        {{ event.description|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }}
+      </div>
+      <h2 class="gradient-section-title">Tanggal</h2>
+      <div class="event-section-content">
+        {{ event.date|date:"l, F j, Y"|default:"-" }}
+      </div>
+      <h2 class="gradient-section-title">Waktu</h2>
+      <div class="event-section-content">
+        {{ event.time|time:"g:i A"|default:"-" }}
+      </div>
+      <h2 class="gradient-section-title">Lokasi</h2>
+      <div class="event-section-content">
+        {{ event.location|default:"-" }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
