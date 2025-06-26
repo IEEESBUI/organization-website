@@ -186,6 +186,17 @@
   .pagination-dot.active {
     background-color: #f32929;
   }
+
+  .custom-text-gradient {
+      background-image: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+      display: inline-block;
+      background-size: 100% 100%;
+      background-position: 0 0;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+  }
 </style>
 {% endblock %}
 
@@ -262,7 +273,7 @@
 <section class="py-8 px-6 max-w-6xl mx-auto w-full" id="featuredArticleSection" {% if has_search_or_filter %}class="featured-hidden" style="display: none;"{% endif %}>
   <div class="text-center mb-6 ">
     <h2 class="text-3xl md:text-4xl font-bold mb-2 animate-on-scroll delay-400">
-      <span class="text-purple-800">Featured</span> <span class="text-[#f32929]">Articles</span>
+      <span class="custom-text-gradient">Featured</span> <span class="custom-text-gradient">Articles</span>
     </h2>
     <p class="text-gray-600 animate-on-scroll delay-400">Highlighted articles from our contributors</p>
   </div>
@@ -304,8 +315,8 @@
 <section class="py-8 px-6 max-w-6xl mx-auto w-full">
   <div class="flex justify-between items-center mb-6 animate-on-scroll delay-400" >
     <div>
-      <h2 class="text-3xl md:text-4xl font-bold mb-2">
-        <span class="text-purple-800">Latest</span> <span class="text-[#f32929]" >Articles</span>
+      <h2 class="text-3xl md:text-4xl font-bold mb-2 animate-on-scroll delay-400">
+        <span class="custom-text-gradient">Latest</span> <span class="custom-text-gradient">Articles</span>
       </h2>
       <p class="text-gray-600">Stay updated with our most recent publications</p>
     </div>

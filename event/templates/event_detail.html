@@ -34,7 +34,7 @@
     .event-detail-container {
         max-width: 900px;
         margin: 0 auto;
-        padding: 2.5rem 1rem 3rem 1rem;
+        padding: 2.5rem 1.5rem 3rem 1.5rem;
     }
     .gradient-title {
         font-size: 3rem;
@@ -82,10 +82,36 @@
         margin-top: 0.5rem;
         line-height: 1.7;
     }
+    @media (max-width: 900px) {
+        .event-detail-container {
+            padding: 2rem 1rem 2.5rem 1rem;
+        }
+    }
     @media (max-width: 600px) {
-        .gradient-title { font-size: 2.1rem; }
-        .gradient-section-title { font-size: 1.4rem; }
-        .event-image-gradient { padding: 1rem 0.5rem; }
+        .event-detail-container {
+            padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+        }
+        .gradient-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .gradient-section-title {
+            font-size: 1.05rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+        .event-image-gradient {
+            padding: 0.5rem 0.1rem;
+            margin-bottom: 1.2rem;
+        }
+        .event-image {
+            max-height: 160px;
+        }
+        .event-section-content {
+            font-size: 0.98rem;
+            margin-bottom: 0.7rem;
+            margin-top: 0.2rem;
+        }
     }
 </style>
 <div class="event-detail-gradient">

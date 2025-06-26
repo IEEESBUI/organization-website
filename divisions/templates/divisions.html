@@ -4,145 +4,237 @@
 {% block title %}Divisions - IEEE SBUI{% endblock %}
 
 {% block content %}
-<div class="flex flex-col min-h-screen">
-  <!-- Hero Section -->
-  <section class="ieee-gradient text-white py-16 md:py-24">
-    <div class="container">
-      <div class="text-center max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Our Divisions</h1>
-        <p class="text-lg md:text-xl opacity-90">
-          Explore the specialized divisions within IEEE SBUI, each focused on different aspects of electrical
-          engineering and technology
-        </p>
-      </div>
-    </div>
-  </section>
+<style>
+  @font-face {
+    font-family: 'Helvetica Neue';
+    src: url('{% static "fonts/HelveticaNeueHeavy_0.otf" %}') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Helvetica Neue';
+    src: url('{% static "fonts/HelveticaNeueLight_0.otf" %}') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+  }
+  h1, h2, h3, h4, h5, h6, .gradient-title, .gradient-text {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+  .gradient-hero {
+    background: linear-gradient(79deg, #F7BF4E 0%, #F32929 51%, #090EA7 100%);
+    color: white;
+    padding: 12rem 0 10rem 0;
+    text-align: center;
+  }
+  .gradient-title, .gradient-text {
+    background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+  .corridor-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,0.07);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    text-align: left;
+    transition: box-shadow 0.2s;
+    border: 1px solid #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+  .corridor-card:hover {
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.12);
+  }
+  .corridor-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.2rem;
+  }
+  .corridor-icon-round {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.06);
+  }
+  .corridor-icon-round img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+  .corridor-title-internal {
+    color: #F32929;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.1;
+  }
+  .corridor-title-pr {
+    color: #F7BF4E;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.1;
+  }
+  .corridor-title-edu {
+    color: #090EA7;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.1;
+  }
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    background: linear-gradient(79deg, #090EA7 0%, #F32929 51%, #F7BF4E 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    width: 100%;
+  }
+  .subsection-title-internal {
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    background: #F32929;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  .subsection-title-pr {
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    background: #F7BF4E;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  .subsection-title-edudev {
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    background: #090EA7;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .corridor-row { gap: 0.7rem; }
+    .corridor-title-internal, .corridor-title-pr, .corridor-title-edu { font-size: 1.2rem; }
+    .corridor-icon-round { width: 44px; height: 44px; }
+    .corridor-icon-round img { width: 24px; height: 24px; }
+  }
+  .section-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-heading-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.06);
+  }
+  .section-heading-icon img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+  .section-heading-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: black;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+  }
+  @media (max-width: 600px) {
+    .section-heading-row { gap: 0.6rem; }
+    .section-heading-title { font-size: 1.5rem; }
+    .section-heading-icon { width: 40px; height: 40px; }
+    .section-heading-icon img { width: 22px; height: 22px; }
+  }
+</style>
 
-  <!-- Divisions Overview -->
-  <section class="py-16 bg-white">
-    <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Divisions Overview</h2>
-        <p class="text-muted-foreground max-w-2xl mx-auto">
-          IEEE SBUI is organized into several specialized divisions, each focusing on different aspects of
-          electrical engineering and technology
-        </p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {% for division in divisions %}
-        <div class="card">
-          <div class="card-content p-6">
-            <div class="flex flex-col md:flex-row gap-4 items-start">
-              <div class="flex-shrink-0">
-                <div class="w-16 h-16 rounded-full bg-gradient-to-r from-{{ division.color }}-600 to-{{ division.color }}-700 flex items-center justify-center">
-                  <i class="fa fa-{{ division.icon_class }} h-8 w-8 text-white"></i>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-2xl font-bold mb-2" id="{{ division.id_name }}">
-                  {{ division.name }}
-                </h3>
-                <p class="text-muted-foreground mb-4">
-                  {{ division.description }}
-                </p>
-                <div class="space-y-2">
-                  <h4 class="font-semibold">Key Activities:</h4>
-                  <ul class="list-disc list-inside text-muted-foreground space-y-1">
-                    {% for activity in division.activities.all %}
-                    <li>{{ activity.description }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+<!-- Hero Section -->
+<section class="gradient-hero">
+  <div class="container">
+    <h1 class="text-6xl md:text-7xl font-extrabold mb-8">Our Divisions</h1>
+    <p class="text-2xl md:text-3xl max-w-3xl mx-auto opacity-90">Explore the specialized divisions within IEEE SBUI, each focused on different aspects of electrical engineering and technology</p>
+  </div>
+</section>
+
+<!-- Corridors Overview -->
+<section class="py-12 bg-white">
+  <div class="container">
+    <h2 class="section-title">Corridors <span class="gradient-text">Overview</span></h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8">
+      <div class="corridor-card">
+        <div class="corridor-row">
+          <span class="corridor-icon-round"><img src="{% static 'images/icon-internal.png' %}" alt="Internal Operations"></span>
+          <span class="corridor-title-internal">Internal Operations</span>
         </div>
-        {% endfor %}
+        <p>Manages the internal affairs of IEEE SBUI, ensuring smooth operations and member satisfaction.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- Division Projects -->
-  <section class="py-16 bg-gray-50">
-    <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Featured Projects</h2>
-        <p class="text-muted-foreground max-w-2xl mx-auto">
-          Explore some of the innovative projects developed by our divisions
-        </p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {% for project in projects %}
-        <div class="card overflow-hidden">
-          {% if project.image %}
-          <img 
-            src="{{ project.image.url }}" 
-            alt="{{ project.title }}" 
-            class="w-full h-48 object-cover"
-          />
-          {% else %}
-          <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-            <span class="text-gray-500">No image available</span>
-          </div>
-          {% endif %}
-          <div class="card-content p-6">
-            <div class="text-sm font-medium text-primary mb-1">{{ project.division.name }}</div>
-            <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
-            <p class="text-muted-foreground mb-4">{{ project.description }}</p>
-            <a href="#" class="text-primary flex items-center gap-1 text-sm font-medium hover:underline">
-              Learn more <i class="fa fa-arrow-right h-3 w-3"></i>
-            </a>
-          </div>
+      <div class="corridor-card">
+        <div class="corridor-row">
+          <span class="corridor-icon-round"><img src="{% static 'images/icon-pr.png' %}" alt="Public Relations"></span>
+          <span class="corridor-title-pr">Public Relations</span>
         </div>
-        {% endfor %}
+        <p>Promotes the organization, manages external communications, and builds partnerships.</p>
       </div>
     </div>
-  </section>
-
-  <!-- Division Leaders -->
-  <section class="py-16 bg-white">
-    <div class="container">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Division Leaders</h2>
-        <p class="text-muted-foreground max-w-2xl mx-auto">
-          Meet the dedicated individuals who lead our specialized divisions
-        </p>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {% for leader in leaders %}
-        <div class="card overflow-hidden">
-          {% if leader.image %}
-          <img 
-            src="{{ leader.image.url }}" 
-            alt="{{ leader.name }}" 
-            class="w-full h-64 object-cover"
-          />
-          {% else %}
-          <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
-            <span class="text-gray-500">No image available</span>
-          </div>
-          {% endif %}
-          <div class="card-content p-6 text-center">
-            <h3 class="text-xl font-bold mb-1">{{ leader.name }}</h3>
-            <p class="text-muted-foreground">{{ leader.position }}</p>
-          </div>
+    <div class="flex justify-center">
+      <div class="corridor-card" style="max-width: 420px;">
+        <div class="corridor-row">
+          <span class="corridor-icon-round"><img src="{% static 'images/icon-edu.png' %}" alt="Education and Development"></span>
+          <span class="corridor-title-edu">Education & Development</span>
         </div>
-        {% endfor %}
+        <p>Routines and advances knowledge for members and the wider public through educational programs.</p>
       </div>
     </div>
-  </section>
-
-
-<!-- start -->
+  </div>
+</section>
 
 <!-- Education Development -->
-<section class="py-16 bg-gradient-to-r from-red-500 to-purple-600">
+<section class="py-16 bg-white">
   <div class="text-center mb-12">
-    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-      Education Development
-    </h1>
+    <div class="section-heading-row">
+      <span class="section-heading-icon"><img src="{% static 'images/icon-edu.png' %}" alt="Education Development"></span>
+      <span class="section-heading-title">Education Development</span>
+    </div>
   </div>
-
   <div class="flex justify-center">
     <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
       <div class="p-1">
@@ -156,207 +248,170 @@
   </div>
 </section>
 
-
-
-
-    <!-- WNC -->
-    <section class="py-16 bg-white">
-      <div class="container">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Workshop and Competition</h2>
-
-          <!-- Manager -->
-          <!-- Manager -->
-          <div class="flex justify-center mb-10">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/HaidarRadityaRafi.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4">
-                <div class="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start">
-                  <!-- Left -->
-                  <div class="text-left">
-                    <h3 class="text-lg font-bold mb-1">Haidar Al Ghifari</h3>
-                    <p class="text-gray-600 text-sm">Vice Manager</p>
-                  </div>
-                  <!-- Center -->
-                  <div class="text-center sm:w-1/3">
-                    <h3 class="text-lg font-bold mb-1">Raditya Danendra</h3>
-                    <p class="text-gray-600 text-sm">Manager</p>
-                  </div>
-                  <!-- Right -->
-                  <div class="text-right">
-                    <h3 class="text-lg font-bold mb-1">Rafi Azhar Hanif</h3>
-                    <p class="text-gray-600 text-sm">Vice Manager</p>
-                  </div>
-                </div>
-              </div>
+<!-- Workshop and Competition -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-edudev">Workshop and Competition</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/HaidarRadityaRafi.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4">
+          <div class="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start">
+            <div class="text-left">
+              <h3 class="text-lg font-bold mb-1">Haidar Al Ghifari</h3>
+              <p class="text-gray-600 text-sm">Vice Manager</p>
+            </div>
+            <div class="text-center sm:w-1/3">
+              <h3 class="text-lg font-bold mb-1">Raditya Danendra</h3>
+              <p class="text-gray-600 text-sm">Manager</p>
+            </div>
+            <div class="text-right">
+              <h3 class="text-lg font-bold mb-1">Rafi Azhar Hanif</h3>
+              <p class="text-gray-600 text-sm">Vice Manager</p>
             </div>
           </div>
-
-
-          <!-- Staff -->
-          <div class="flex justify-center flex-wrap gap-6">
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/AsheilaAdhinata.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Asheila Maharani M G & Adhinata M. Y. Negoro</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/TauraIftikharus.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Taura Z. N. Prasetyo & Iftikharus Raudana</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/BambangShannon.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Bambang Jatmiko & Shannon Aurelia Widjaja</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/Gorga.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Gorga Friedrik S</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
         </div>
       </div>
-    </section>
-
-      <!-- CurrJour -->
-      <section class="py-16 bg-white">
-        <div class="container">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Curriculum and Journal</h2>
-
-            <!-- Manager -->
-            <div class="flex justify-center mb-10">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/MikhailPirel.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Mikhail Ayares & Pirel Jenar</h3>
-                  <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="flex justify-center flex-wrap gap-6">
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/DavidRafeyMRasyad.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">David Alexander & Rafey Muhammad Rizanul & M. Rasyad I. Putra</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/RaulArsha.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Raul Fadila Bagus S & Arsha Permana Haryoko</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-
-          </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/AsheilaAdhinata.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
         </div>
-      </section>
-
-    <!-- Seminar -->
-    <section class="py-16 bg-white">
-      <div class="container">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Seminar</h2>
-
-          <!-- Manager -->
-          <div class="flex justify-center mb-10">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/IchsanShaquilla.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Ichsan Kamil & Shaquilla Arkhan</h3>
-                <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Staff -->
-          <div class="flex justify-center flex-wrap gap-6">
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/MiloDerryl.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Milo Abhimanggala H & Derryl Liandryo Putra</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/NaylaGibran.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Nayla Anindya Syahrani & Gibran Fayzati</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Asheila Maharani M G & Adhinata M. Y. Negoro</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
         </div>
       </div>
-    </section>
-
-
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/TauraIftikharus.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Taura Z. N. Prasetyo & Iftikharus Raudana</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/BambangShannon.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Bambang Jatmiko & Shannon Aurelia Widjaja</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/Gorga.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Gorga Friedrik S</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- Curriculum and Journal -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-edudev">Curriculum and Journal</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/MikhailPirel.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Mikhail Ayares & Pirel Jenar</h3>
+          <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
+        </div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/DavidRafeyMRasyad.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">David Alexander & Rafey Muhammad Rizanul & M. Rasyad I. Putra</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/RaulArsha.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Raul Fadila Bagus S & Arsha Permana Haryoko</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-
-
-
+<!-- Seminar -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-edudev">Seminar</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/IchsanShaquilla.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Ichsan Kamil & Shaquilla Arkhan</h3>
+          <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
+        </div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/MiloDerryl.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Milo Abhimanggala H & Derryl Liandryo Putra</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/NaylaGibran.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Nayla Anindya Syahrani & Gibran Fayzati</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Public Relations -->
-<section class="py-16 bg-gradient-to-r from-red-500 to-yellow-400">
+<section class="py-16 bg-white">
   <div class="text-center mb-12">
-    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-      Public Relations
-    </h1>
+    <div class="section-heading-row">
+      <span class="section-heading-icon"><img src="{% static 'images/icon-pr.png' %}" alt="Public Relations"></span>
+      <span class="section-heading-title">Public Relations</span>
+    </div>
   </div>
-
   <div class="flex justify-center">
     <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
       <div class="p-1">
@@ -370,234 +425,200 @@
   </div>
 </section>
 
-
-    <!-- Creative Media -->
-    <section class="py-16 bg-white">
-      <div class="container">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Creative Media</h2>
-
-          <!-- Manager -->
-          <div class="flex justify-center mb-10">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/RengganisNaura.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Rengganis Naurasyifa & Naura Maritza</h3>
-                <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Staff -->
-          <div class="flex justify-center flex-wrap gap-6">
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/AudinaRafli.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Audina Syarifah G & Rafli Azaki</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/MIsyraqErland.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">M Isyraq Faachir & Erland Farrel Hollyan</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/Naura.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Naura Khansa Kamila</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
+<!-- Creative Media -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-pr">Creative Media</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/RengganisNaura.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Rengganis Naurasyifa & Naura Maritza</h3>
+          <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
         </div>
       </div>
-    </section>
-
-      <!-- External Affairs -->
-      <section class="py-16 bg-white">
-        <div class="container">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">External Affairs</h2>
-
-            <!-- Manager -->
-            <div class="flex justify-center mb-10">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/AndreaRania.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Andrea Ika & Rania Maryam</h3>
-                  <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="flex justify-center flex-wrap gap-6">
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/RafaelNaila.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Rafael & Naila</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/Bintang.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Bintang</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/IGedeZacharyKeanu.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Samuel & Arkyn & Keanu</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/AudinaRafli.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
         </div>
-      </section>
-
-    <!-- Website Development -->
-    <section class="py-16 bg-white">
-      <div class="container">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Website Development</h2>
-
-          <!-- Manager -->
-          <div class="flex justify-center mb-10">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/FikarFariz.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Fikar Hilmi Adhrevi & Fariz</h3>
-                <p class="text-gray-600 text-sm">Manager & Vice Manager</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Staff -->
-          <div class="flex justify-center flex-wrap gap-6">
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/DaffaBenintya.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Daffa Desra Hastiar & Benintya Farrel Armaya</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/HeraldoMRafly.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Heraldo Arman & M Rafly Fatih Rabbani</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Audina Syarifah G & Rafli Azaki</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
         </div>
       </div>
-    </section>
-
-    <!-- MAP -->
-    <section class="py-16 bg-white">
-      <div class="container">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Marketing and Publication</h2>
-
-          <!-- Manager -->
-          <div class="flex justify-center mb-10">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/ArgathaMutiara.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Argatha Advelida & Mutiara Putri Afrita</h3>
-                <p class="text-gray-600 text-sm">Manager & Vice Manager</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Staff -->
-          <div class="flex justify-center flex-wrap gap-6">
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/AndiAyesha.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Andi Gamal Farabi S & Ayesha Zelene Faeyza</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/Daniel.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Daniel Gabriel H S</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/MIsyraqErland.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">M Isyraq Faachir & Erland Farrel Hollyan</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
         </div>
       </div>
-    </section>
-
-
-    
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/Naura.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Naura Khansa Kamila</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- External Affairs -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-pr">External Affairs</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/AndreaRania.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Andrea Ika & Rania Maryam</h3>
+          <p class="text-gray-600 text-sm">Vice Manager & Manager</p>
+        </div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/RafaelNaila.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Rafael & Naila</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/Bintang.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Bintang</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/IGedeZacharyKeanu.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Samuel & Arkyn & Keanu</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Website Development -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-pr">Website Development</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/FikarFariz.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Fikar Hilmi Adhrevi & Fariz</h3>
+          <p class="text-gray-600 text-sm">Manager & Vice Manager</p>
+        </div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/DaffaBenintya.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Daffa Desra Hastiar & Benintya Farrel Armaya</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/HeraldoMRafly.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Heraldo Arman & M Rafly Fatih Rabbani</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marketing and Publication -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-pr">Marketing and Publication</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/ArgathaMutiara.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Argatha Advelida & Mutiara Putri Afrita</h3>
+          <p class="text-gray-600 text-sm">Manager & Vice Manager</p>
+        </div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/AndiAyesha.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Andi Gamal Farabi S & Ayesha Zelene Faeyza</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/Daniel.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Daniel Gabriel H S</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Internal Operations -->
-<section class="py-16 bg-gradient-to-r from-red-500 to-blue-600">
+<section class="py-16 bg-white">
   <div class="text-center mb-12">
-    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-      Internal Operations
-    </h1>
+    <div class="section-heading-row">
+      <span class="section-heading-icon"><img src="{% static 'images/icon-internal.png' %}" alt="Internal Operations"></span>
+      <span class="section-heading-title">Internal Operations</span>
+    </div>
   </div>
-
   <div class="flex justify-center">
     <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
       <div class="p-1">
@@ -611,137 +632,89 @@
   </div>
 </section>
 
-
-    <!-- InDev -->
-    <section class="py-16 bg-white">
-      <div class="container">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Internal Development</h2>
-
-          <!-- Manager -->
-          <div class="flex justify-center mb-10">
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/FathanTri.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Fathan Ghani & Tri Putra Mahadika</h3>
-                <p class="text-gray-600 text-sm"> Manager & Vice Manager</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Staff -->
-          <div class="flex justify-center flex-wrap gap-6">
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/FirazyDwindra.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Firazy Desra Agustian M G & Dwidra Audric Farras</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-              <div class="p-1">
-                <img src="{% static 'images/AmaraSalma.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-lg font-bold mb-1">Amara Dwistha Praba & Salma Nadira Riztisa</h3>
-                <p class="text-gray-600 text-sm">Staff</p>
-              </div>
-            </div>
-
+<!-- Internal Development -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-internal">Internal Development</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/FathanTri.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
         </div>
-      </div>
-    </section>
-
-      <!-- Research and Development -->
-      <section class="py-16 bg-white">
-        <div class="container">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Research and Development</h2>
-
-            <!-- Manager -->
-            <div class="flex justify-center mb-10">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/IlyasRazzan.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Ilyas Attabarani & Razzan</h3>
-                  <p class="text-gray-600 text-sm"> Manager & Vice Manager</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Staff -->
-            <div class="flex justify-center flex-wrap gap-6">
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/NadhifPutu.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Nadhif Ramadhiansyah & Putu Arkana</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-
-              <!-- Staff -->
-              <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
-                <div class="p-1">
-                  <img src="{% static 'images/RaulArsha.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="text-lg font-bold mb-1">Ferre Jethro Tomahuw & Raidilan Abdullah Anaqi & Dimas Akmal Rajendra</h3>
-                  <p class="text-gray-600 text-sm">Staff</p>
-                </div>
-              </div>
-
-          </div>
-        </div>
-      </section>
-
-    
-
-        </div>
-      </div>
-    </section>
-
-    
-  </div>
-</section>
-
-
-
-
-
-
-
-  <!-- Join a Division -->
-  <section class="ieee-gradient text-white py-16">
-    <div class="container">
-      <div class="text-center max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Join a Division</h2>
-        <p class="text-lg opacity-90 mb-8">
-          Interested in joining one of our specialized divisions? Become a member of IEEE SBUI and indicate your
-          division preference during registration.
-        </p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a href="#" class="btn btn-lg bg-white text-red-600 hover:bg-white/90">
-            Become a Member
-          </a>
-          <a href="#" class="btn btn-lg btn-outline border-white text-white hover:bg-white/10">
-            Contact Division Leaders
-          </a>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Fathan Ghani & Tri Putra Mahadika</h3>
+          <p class="text-gray-600 text-sm"> Manager & Vice Manager</p>
         </div>
       </div>
     </div>
-  </section>
-</div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/FirazyDwindra.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Firazy Desra Agustian M G & Dwidra Audric Farras</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/AmaraSalma.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Amara Dwistha Praba & Salma Nadira Riztisa</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Research and Development -->
+<section class="py-16 bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="subsection-title-internal">Research and Development</h2>
+    </div>
+    <!-- Manager -->
+    <div class="flex justify-center mb-10">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/IlyasRazzan.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Ilyas Attabarani & Razzan</h3>
+          <p class="text-gray-600 text-sm"> Manager & Vice Manager</p>
+        </div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="flex justify-center flex-wrap gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/NadhifPutu.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Nadhif Ramadhiansyah & Putu Arkana</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden animate-on-scroll delay-100 w-full max-w-md">
+        <div class="p-1">
+          <img src="{% static 'images/RaulArsha.jpg' %}" alt="Leader 1" class="w-full h-48 object-cover object-center">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold mb-1">Ferre Jethro Tomahuw & Raidilan Abdullah Anaqi & Dimas Akmal Rajendra</h3>
+          <p class="text-gray-600 text-sm">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 {% endblock %} 
