@@ -284,7 +284,7 @@
       <div class="md:w-1/4">
         <div class="relative w-full aspect-square rounded-lg overflow-hidden">
           {% if featured_article.image %}
-          <img src="{{ featured_article.image.url }}" alt="{{ featured_article.title }}" class="object-cover w-full h-full">
+          <img src="{{ featured_article.image }}" alt="{{ featured_article.title }}" class="object-cover w-full h-full">
           {% else %}
           <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full">
           {% endif %}

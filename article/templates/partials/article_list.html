@@ -5,7 +5,7 @@
      data-categories="{% for category in article.categories.all %}{{ category.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
   <div class="relative w-full aspect-video">
     {% if article.image %}
-    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="object-cover w-full h-full">
+    <img src="{{ article.image }}" alt="{{ article.title }}" class="object-cover w-full h-full">
     {% else %}
     <img src="{% static 'images/IEEE-Logo-Round.png' %}" alt="Placeholder" class="object-cover w-full h-full">
     {% endif %}

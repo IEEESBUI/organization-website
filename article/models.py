@@ -47,7 +47,14 @@ def article_image_upload_to(instance, filename):
     """
     ext = filename.split('.')[-1]
     filename = f"{uuid.uuid4()}.{ext}"
-    return "article/articles_images/" +filename
+    filename = "articles-" + filename
+    return "static/images/" +filename
+
+# def article_image_upload_to(instance, filename):
+#     ext = filename.split('.')[-1]
+#     filename = f"{uuid.uuid4()}.{ext}"
+
+#     return f"articles/{filename}"
 
 class Article(models.Model):
     """
@@ -86,7 +93,8 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
-    image = models.ImageField(upload_to=article_image_upload_to, blank=True, null=True)
+    # image = models.ImageField(upload_to=article_image_upload_to, blank=True, null=True)
+    image = models.URLField(blank=True, null=True)
     excerpt = models.TextField(help_text="A short description of the article")
     content = models.TextField()  # TODO: ganti jadi rich text editor kalau mau, cuman tergantung kebutuhan juga https://medium.com/@yashnarsamiyev2/how-to-add-ckeditor-in-django-aa6de5a09862
     categories = models.ManyToManyField(Category, related_name='articles')
