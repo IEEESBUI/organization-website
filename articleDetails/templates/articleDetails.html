@@ -91,7 +91,7 @@
 <!-- Hero section with gradient and image -->
 <div class="article-hero-gradient">
   {% if article.image %}
-    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="article-hero-img">
+    <img src="{{ article.image }}" alt="{{ article.title }}" class="article-hero-img">
   {% else %}
     <img src="{% static 'images/team-photo.jpg' %}" alt="{{ article.title }}" class="article-hero-img">
   {% endif %}
